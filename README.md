@@ -1,13 +1,18 @@
 # Research Conference Management System (RCMS)
 
+[![Live Demo](https://img.shields.io/badge/🌐_Live_Demo-rcms--c4je.onrender.com-00C853?style=for-the-badge&logo=render&logoColor=white)](https://rcms-c4je.onrender.com)
+
 [![Java 17](https://img.shields.io/badge/Java-17-blue.svg?style=flat-square&logo=openjdk)](https://adoptium.net/)
 [![Spring Boot 3.3.4](https://img.shields.io/badge/Spring%20Boot-3.3.4-brightgreen.svg?style=flat-square&logo=springboot)](https://spring.io/projects/spring-boot)
-[![MySQL 8.0](https://img.shields.io/badge/MySQL-8.0-blue.svg?style=flat-square&logo=mysql)](https://www.mysql.com/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Neon_Cloud-336791.svg?style=flat-square&logo=postgresql&logoColor=white)](https://neon.tech/)
 [![Docker Compose](https://img.shields.io/badge/Docker%20Compose-v3.8-blue.svg?style=flat-square&logo=docker)](https://docs.docker.com/compose/)
+[![Render](https://img.shields.io/badge/Deployed_on-Render-46E3B7.svg?style=flat-square&logo=render&logoColor=white)](https://render.com/)
 [![Bootstrap 5](https://img.shields.io/badge/Bootstrap-5.3.2-purple.svg?style=flat-square&logo=bootstrap)](https://getbootstrap.com/)
 [![License](https://img.shields.io/badge/License-Academic-orange.svg?style=flat-square)](#license)
 
 A modern, full-featured enterprise academic platform designed for managing university research conferences: manuscript submission, double-blind peer evaluations, proceedings indexing, scheduling, and verifiable digital certificates.
+
+> 🌐 **Live Application**: **[https://rcms-c4je.onrender.com](https://rcms-c4je.onrender.com)**
 
 ---
 
@@ -28,9 +33,10 @@ RCMS streamlines academic conference operations across four core user personas:
 |:---|:---|
 | **Backend Core** | Java 17, Spring Boot 3.3.4, Spring Data JPA, Hibernate ORM |
 | **Frontend UI** | Thymeleaf, HTML5, Vanilla CSS3, Bootstrap 5.3.2, Bootstrap Icons |
-| **Database Layer** | MySQL 8.0 (Containerized / Production), H2 In-Memory DB (`h2` profile for offline testing) |
+| **Database Layer** | PostgreSQL (Neon Cloud — Production), MySQL 8.0 (Docker), H2 In-Memory (`h2` profile for offline testing) |
 | **Build & Tooling** | Apache Maven 3.9.x, Maven Wrapper (`mvnw` / `mvnw.cmd`) |
 | **Containerization** | Docker Engine 20.10+, Docker Compose v3.8, Multi-stage secure build |
+| **Cloud Deployment** | Render (Web Service), Neon PostgreSQL (Serverless Database) |
 
 ---
 
@@ -166,6 +172,34 @@ Research-Conference-Management-System/
 - 🛠️ [Development Architecture & Guidelines](docs/DEVELOPMENT.md)
 - ❓ [Troubleshooting & Diagnostics Guide](docs/TROUBLESHOOTING.md)
 - 🧪 [Manual Quality Assurance Test Cases](docs/MANUAL_TEST_CASES.md)
+
+---
+
+## 🌐 Live Demo & Cloud Deployment
+
+| Component | Technology | Details |
+|:---|:---|:---|
+| **Live URL** | [rcms-c4je.onrender.com](https://rcms-c4je.onrender.com) | Production deployment |
+| **Cloud Platform** | Render | Docker-based Web Service |
+| **Database** | Neon PostgreSQL | Serverless cloud-native PostgreSQL |
+| **Backend** | Spring Boot 3.3.4 | Java 17, Spring Data JPA, Hibernate ORM |
+| **Frontend** | Thymeleaf + Bootstrap 5 | Server-side rendered responsive UI |
+| **Containerization** | Docker | Multi-stage build with non-root security |
+
+> ⚡ **Note**: The Render free tier may spin down after inactivity. The first request after idle may take 30–60 seconds to cold-start.
+
+---
+
+## 👥 Team Contributions
+
+| Team Member | GitHub | Key Contributions |
+|:---|:---|:---|
+| **Arjun Selvaraj** | [@ARJUN-AIML](https://github.com/ARJUN-AIML) | Full-stack development — Spring Boot backend (controllers, services, entities, repositories), Thymeleaf frontend templates, responsive CSS, Docker containerization, CI/CD pipeline, Neon PostgreSQL integration, Render cloud deployment, project documentation |
+| *[Team Member 2]* | *[GitHub Profile]* | *[Describe specific contributions here]* |
+| *[Team Member 3]* | *[GitHub Profile]* | *[Describe specific contributions here]* |
+| *[Team Member 4]* | *[GitHub Profile]* | *[Describe specific contributions here]* |
+
+> 📝 *Placeholder rows above should be replaced with actual teammate names, GitHub profiles, and verified contributions before final submission.*
 
 ---
 
