@@ -194,12 +194,10 @@ Research-Conference-Management-System/
 
 | Team Member | GitHub | Key Contributions |
 |:---|:---|:---|
-| **Arjun Selvaraj** | [@ARJUN-AIML](https://github.com/ARJUN-AIML) | Full-stack development — Spring Boot backend (controllers, services, entities, repositories), Thymeleaf frontend templates, responsive CSS, Docker containerization, CI/CD pipeline, Neon PostgreSQL integration, Render cloud deployment, project documentation |
-| *[Team Member 2]* | *[GitHub Profile]* | *[Describe specific contributions here]* |
-| *[Team Member 3]* | *[GitHub Profile]* | *[Describe specific contributions here]* |
-| *[Team Member 4]* | *[GitHub Profile]* | *[Describe specific contributions here]* |
-
-> 📝 *Placeholder rows above should be replaced with actual teammate names, GitHub profiles, and verified contributions before final submission.*
+| **Arjun S** | [@ARJUN-AIML](https://github.com/ARJUN-AIML) | Developer |
+| **Adithya Natarajan M** | [@ADITHYA-1908](https://github.com/ADITHYA-1908) | Co-Developer |
+| **Kamalesh K** | [@Kamalesh-aiml](https://github.com/Kamalesh-aiml) | Co-Developer |
+| **Ajay Kumar M** | *[GitHub TBD]* | Co-Developer |
 
 ---
 
