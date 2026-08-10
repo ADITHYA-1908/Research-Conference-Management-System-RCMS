@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: header-head('System Exception')}"></head>
+<body>
+<div th:replace="~{fragments/header :: navbar}"></div>
+
+<main class="container-xl my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 text-center">
+            <div class="card-univ p-5 shadow-sm">
+                <i class="bi bi-exclamation-triangle text-danger display-3 mb-3"></i>
+                <h1 class="page-title text-dark mb-2">HTTP Exception <span th:text="${statusCode}">500</span></h1>
+                <p class="text-secondary mb-4" th:text="${errorMessage}">An error has occurred.</p>
+                <div class="d-flex gap-2 justify-content-center">
+                    <a th:href="@{/}" class="btn btn-primary btn-sm">
+                        <i class="bi bi-house-door me-1"></i> Return to Homepage
+                    </a>
+                    <a th:href="@{/conferences}" class="btn btn-outline-primary btn-sm">
+                        <i class="bi bi-calendar3 me-1"></i> Browse Conferences
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

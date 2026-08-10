@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: header-head('Paper Evaluation')}"></head>
+<body>
+<div th:replace="~{fragments/header :: navbar}"></div>
+
+<main class="container-xl my-4">
+    <div class="mb-3">
+        <a th:href="@{/admin/papers}" class="btn-mobile-back">
+            <i class="bi bi-arrow-left"></i> Back to Submitted Papers
+        </a>
+    </div>
+
+    <div th:if="${param.assigned}" class="alert alert-success py-2 small-text">Reviewer assigned successfully! Status updated to UNDER_REVIEW.</div>
+    <div th:if="${param.decision}" class="alert alert-info py-2 small-text">Conference chair decision submitted successfully.</div>
+    <div th:if="${param.error}" class="alert alert-danger py-2 small-text" th:text="${param.error}">Error</div>
+
+    <div class="row g-3">
+        <!-- Paper Details -->
+        <div class="col-lg-8">
+            <div class="card-univ p-4 mb-3">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <span th:class="'badge ' + (${paper.status == 'SUBMITTED'} ? 'bg-info' : (${paper.status == 'UNDER_REVIEW'} ? 'bg-warning' : (${paper.status == 'ACCEPTED'} ? 'bg-success' : 'bg-danger')))"
+                          th:text="${paper.status}">STATUS</span>
+                    <span class="small-text">Submitted: <span th:text="${#temporals.format(paper.submittedAt, 'yyyy-MM-dd HH:mm')}">Date</span></span>
+                </div>
+
+                <h1 class="page-title text-primary mb-2" th:text="${paper.title}">Paper Title</h1>
+                <div class="small-text mb-3">
+                    <strong>Author:</strong> <span th:text="${paper.author.name}">Author</span> (<span th:text="${paper.author.institution}">Institution</span>) &bull;
+                    <strong>Conference:</strong> <span th:text="${paper.conference.title}">Conference</span>
+                </div>
+
+                <div class="mb-3">
+                    <div class="stat-label mb-1">Keywords</div>
+                    <div class="small-text" th:text="${paper.keywords}">Keywords</div>
+                </div>
+
+                <div class="mb-3">
+                    <div class="stat-label mb-1">Abstract</div>
+                    <div class="p-3 bg-light border rounded small-text leading-relaxed" th:text="${paper.abstractText}">Abstract...</div>
+                </div>
+
+                <div>
+                    <div class="stat-label mb-1">Manuscript File</div>
+                    <span class="badge bg-light text-dark border" th:text="${paper.filePath}">file.pdf</span>
+                </div>
+            </div>
+
+            <!-- Reviews Received -->
+            <div class="card-univ">
+                <div class="card-header-univ">Peer Reviews Received</div>
+                <div class="card-body p-3">
+                    <div th:if="${#lists.isEmpty(reviews)}" class="small-text text-muted">No reviewer evaluations submitted yet.</div>
+                    <div class="list-group list-group-flush" th:unless="${#lists.isEmpty(reviews)}">
+                        <div class="list-group-item px-0 py-2" th:each="rev : ${reviews}">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <strong>Reviewer: <span th:text="${rev.reviewer.name}">Reviewer</span></strong>
+                                <span th:class="'badge ' + (${rev.status == 'COMPLETED'} ? 'bg-success' : 'bg-warning')" th:text="${rev.status}">PENDING</span>
+                            </div>
+                            <div th:if="${rev.status == 'COMPLETED'}">
+                                <div class="d-flex gap-2 my-1">
+                                    <span class="badge bg-primary">Score: <span th:text="${rev.score}">8</span>/10</span>
+                                    <span class="badge bg-secondary">Recommendation: <span th:text="${rev.recommendation}">ACCEPT</span></span>
+                                </div>
+                                <div class="p-2 bg-light border rounded small-text text-secondary" th:text="${rev.comments}">Comments...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+            <!-- Assign Reviewer -->
+            <div class="card-univ p-3 mb-3">
+                <h2 class="section-title mb-2">Assign Peer Reviewer</h2>
+                <form th:action="@{/admin/paper/{id}/assign(id=${paper.id})}" method="post">
+                    <div class="mb-3">
+                        <label class="form-label">Select Reviewer</label>
+                        <select class="form-select" name="reviewerId" required>
+                            <option value="">-- Choose Reviewer --</option>
+                            <option th:each="rev : ${reviewers}" th:value="${rev.id}" th:text="${rev.name}">Ada Lovelace</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-sm w-100">
+                        <i class="bi bi-person-check me-1"></i> Assign Reviewer
+                    </button>
+                </form>
+            </div>
+
+            <!-- Chair Decision -->
+            <div class="card-univ p-3">
+                <h2 class="section-title mb-2">Chair Decision</h2>
+                <p class="small-text mb-2">Record official paper acceptance or rejection.</p>
+                <form th:action="@{/admin/paper/{id}/decision(id=${paper.id})}" method="post">
+                    <div class="mb-3">
+                        <label class="form-label">Final Status</label>
+                        <select class="form-select" name="status" required>
+                            <option value="ACCEPTED" th:selected="${paper.status == 'ACCEPTED'}">ACCEPT PAPER</option>
+                            <option value="REJECTED" th:selected="${paper.status == 'REJECTED'}">REJECT PAPER</option>
+                            <option value="UNDER_REVIEW" th:selected="${paper.status == 'UNDER_REVIEW'}">UNDER REVIEW</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-success btn-sm w-100">
+                        <i class="bi bi-check-all me-1"></i> Submit Decision
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

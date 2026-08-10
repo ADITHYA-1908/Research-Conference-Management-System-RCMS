@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: header-head('Submit Peer Evaluation')}"></head>
+<body>
+<div th:replace="~{fragments/header :: navbar}"></div>
+
+<main class="container-xl my-4">
+    <div class="mb-3">
+        <a th:href="@{/reviewer/papers}" class="btn-mobile-back">
+            <i class="bi bi-arrow-left"></i> Back to Assigned Papers
+        </a>
+    </div>
+
+    <div class="row g-3">
+        <!-- Paper Abstract Column -->
+        <div class="col-md-5">
+            <div class="card-univ p-4 h-100">
+                <h2 class="section-title text-primary mb-2">Manuscript Specification</h2>
+                <h1 class="page-title text-dark mb-2" th:text="${review.paper.title}">Paper Title</h1>
+                <div class="small-text mb-3">
+                    <strong>Conference:</strong> <span th:text="${review.paper.conference.title}">Conference</span>
+                </div>
+                <hr class="my-2">
+                <div class="stat-label mb-1">Keywords</div>
+                <div class="small-text mb-3" th:text="${review.paper.keywords}">Keywords</div>
+
+                <div class="stat-label mb-1">Abstract</div>
+                <div class="p-3 bg-light border rounded small-text leading-relaxed" th:text="${review.paper.abstractText}">Abstract...</div>
+            </div>
+        </div>
+
+        <!-- Evaluation Form Column -->
+        <div class="col-md-7">
+            <div class="card-univ p-4">
+                <h2 class="section-title text-primary mb-2"><i class="bi bi-pencil-square me-2"></i> Peer Evaluation Form</h2>
+                <hr class="my-3">
+
+                <form th:action="@{/reviewer/submit-review}" th:object="${review}" method="post">
+                    <input type="hidden" name="reviewId" th:value="${review.id}">
+
+                    <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger py-2 small-text mb-3">
+                        <ul class="mb-0 ps-3">
+                            <li th:each="err : ${#fields.errors('*')}" th:text="${err}">Validation Error</li>
+                        </ul>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Overall Score (1 - 10) *</label>
+                        <select class="form-select" th:field="*{score}" required>
+                            <option value="">-- Choose Score Rating --</option>
+                            <option value="10">10 - Exceptional Contribution</option>
+                            <option value="9">9 - Excellent Paper</option>
+                            <option value="8">8 - Strong Accept</option>
+                            <option value="7">7 - Weak Accept</option>
+                            <option value="6">6 - Borderline Accept</option>
+                            <option value="5">5 - Borderline Reject</option>
+                            <option value="4">4 - Weak Reject</option>
+                            <option value="3">3 - Major Revisions Needed</option>
+                            <option value="2">2 - Poor Quality</option>
+                            <option value="1">1 - Reject</option>
+                        </select>
+                        <div class="text-danger small-text mt-1" th:if="${#fields.hasErrors('score')}" th:errors="*{score}"></div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Recommendation *</label>
+                        <select class="form-select" th:field="*{recommendation}" required>
+                            <option value="">-- Select Recommendation --</option>
+                            <option value="ACCEPT">ACCEPT</option>
+                            <option value="MINOR_REVISION">MINOR REVISION</option>
+                            <option value="MAJOR_REVISION">MAJOR REVISION</option>
+                            <option value="REJECT">REJECT</option>
+                        </select>
+                        <div class="text-danger small-text mt-1" th:if="${#fields.hasErrors('recommendation')}" th:errors="*{recommendation}"></div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label">Detailed Review Comments *</label>
+                        <textarea class="form-control" th:field="*{comments}" rows="6" placeholder="Provide technical feedback regarding methodology, novelty, clarity, and contribution..." required></textarea>
+                        <div class="text-danger small-text mt-1" th:if="${#fields.hasErrors('comments')}" th:errors="*{comments}"></div>
+                    </div>
+
+                    <div class="d-flex gap-2 justify-content-end">
+                        <a th:href="@{/reviewer/papers}" class="btn btn-secondary btn-sm">Cancel</a>
+                        <button type="submit" class="btn btn-success btn-sm">
+                            <i class="bi bi-check-circle me-1"></i> Submit Evaluation
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

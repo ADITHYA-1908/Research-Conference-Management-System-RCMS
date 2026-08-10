@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: header-head('Author Registration')}"></head>
+<body>
+<div th:replace="~{fragments/header :: navbar}"></div>
+
+<main class="container-xl my-5">
+    <!-- Mobile Back Navigation -->
+    <div class="d-md-none mb-3 text-start">
+        <a href="javascript:handleMobileBack()" class="btn-mobile-back">
+            <i class="bi bi-arrow-left"></i> Back to Sign In
+        </a>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-7 col-lg-6">
+            <div class="card-univ p-4">
+                <div class="text-center mb-4">
+                    <div class="d-inline-flex align-items-center gap-2 p-2 rounded-3 bg-white border mb-2 shadow-sm">
+                        <div class="d-flex align-items-center justify-content-center bg-primary-subtle rounded-2 p-1" style="width: 42px; height: 42px;">
+                            <img th:src="@{/images/logo.png}" alt="RCMS Logo" class="img-fluid rounded-2" style="max-height: 100%; object-fit: contain;">
+                        </div>
+                        <div class="text-start" style="line-height: 1.1;">
+                            <div class="fw-bold text-primary" style="font-size: 1.4rem; letter-spacing: 1.5px;">RCMS</div>
+                            <div class="text-muted" style="font-size: 0.62rem; font-weight: 600; text-transform: uppercase;">Research Conference Management System</div>
+                        </div>
+                    </div>
+                    <h2 class="section-title mb-1">Author Enrollment Portal</h2>
+                    <p class="small-text text-muted mb-0">Register an author account to submit research manuscripts.</p>
+                </div>
+
+                <div th:if="${errorMessage}" class="alert alert-danger py-2 small-text" th:text="${errorMessage}">Error</div>
+
+                <form th:action="@{/register}" th:object="${registerDto}" method="post">
+                    <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger py-2 small-text mb-3">
+                        <ul class="mb-0 ps-3">
+                            <li th:each="err : ${#fields.errors('*')}" th:text="${err}">Validation Error</li>
+                        </ul>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Full Name *</label>
+                        <input type="text" class="form-control" th:field="*{name}" placeholder="e.g. Dr. Alan Turing" autocomplete="name" required>
+                        <div class="text-danger small-text mt-1" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Email Address *</label>
+                        <input type="email" class="form-control" th:field="*{email}" placeholder="author@university.edu" autocomplete="username" required>
+                        <div class="text-danger small-text mt-1" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Password *</label>
+                            <input type="password" class="form-control" th:field="*{password}" placeholder="Choose password" autocomplete="new-password" required>
+                            <div class="text-danger small-text mt-1" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Confirm Password *</label>
+                            <input type="password" class="form-control" th:field="*{confirmPassword}" placeholder="Re-enter password" autocomplete="new-password" required>
+                            <div class="text-danger small-text mt-1" th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}"></div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Institution / University</label>
+                            <input type="text" class="form-control" th:field="*{institution}" placeholder="e.g. Stanford University">
+                            <div class="text-danger small-text mt-1" th:if="${#fields.hasErrors('institution')}" th:errors="*{institution}"></div>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Phone Number</label>
+                            <input type="text" class="form-control" th:field="*{phone}" placeholder="+1-555-0199">
+                            <div class="text-danger small-text mt-1" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Research Summary / Bio</label>
+                        <textarea class="form-control" th:field="*{bio}" rows="3" placeholder="Brief research background..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100 py-2">
+                        <i class="bi bi-person-check me-1"></i> Register Account
+                    </button>
+                </form>
+
+                <div class="text-center mt-3">
+                    <span class="small-text">Already registered?</span>
+                    <a th:href="@{/login}" class="fw-semibold text-primary small-text ms-1">Sign In Here</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

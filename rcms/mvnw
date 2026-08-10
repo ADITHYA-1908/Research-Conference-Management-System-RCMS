@@ -1,0 +1,27 @@
+#!/bin/sh
+# ----------------------------------------------------------------------------
+# Apache Maven Wrapper Executable Shell Script for RCMS Module
+# ----------------------------------------------------------------------------
+
+PRG="$0"
+while [ -h "$PRG" ]; do
+  ls=`ls -ld "$PRG"`
+  link=`expr "$ls" : '.*-> \(.*\)$'`
+  if expr "$link" : '/.*' > /dev/null; then
+    PRG="$link"
+  else
+    PRG=`dirname "$PRG"`/"$link"
+  fi
+done
+SAVED=`pwd`
+CASE_DIR=`dirname "$PRG"`
+
+cd "$CASE_DIR"
+
+if command -v mvn >/dev/null 2>&1; then
+  mvn "$@"
+else
+  echo "[ERROR] Maven ('mvn') is not installed or not in PATH."
+  echo "Please install Maven or JDK 17 to build this project."
+  exit 1
+fi

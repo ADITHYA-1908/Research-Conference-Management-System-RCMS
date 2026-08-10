@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: header-head('Submitted Manuscripts')}"></head>
+<body>
+<div th:replace="~{fragments/header :: navbar}"></div>
+
+<main class="container-xl my-4">
+    <!-- Mobile Back Navigation -->
+    <div class="d-md-none mb-3">
+        <a th:href="@{/admin/dashboard}" class="btn-mobile-back">
+            <i class="bi bi-arrow-left"></i> Back to Admin Portal
+        </a>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <h1 class="page-title"><i class="bi bi-file-earmark-text text-primary me-2"></i> Submitted Research Manuscripts</h1>
+            <p class="small-text mb-0">Master list of submitted papers across all open conferences.</p>
+        </div>
+        <div>
+            <input type="text" class="form-control form-control-sm table-search-input" data-table-target="adminPapersTable" placeholder="Filter manuscripts by title/author..." style="width: 250px;">
+        </div>
+    </div>
+
+    <div class="card-univ">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table id="adminPapersTable" class="table table-univ align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Paper Title &amp; Keywords</th>
+                            <th>Author</th>
+                            <th>Target Conference</th>
+                            <th>Submission Date</th>
+                            <th>Status</th>
+                            <th class="text-end">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:if="${#lists.isEmpty(papers)}">
+                            <td colspan="7" class="text-center text-muted py-3">No submitted manuscripts found.</td>
+                        </tr>
+                        <tr th:each="paper : ${papers}">
+                            <td class="fw-bold text-muted">#<span th:text="${paper.id}">1</span></td>
+                            <td>
+                                <strong class="text-primary" th:text="${paper.title}">Title</strong>
+                                <div class="small-text" th:text="${paper.keywords}">Keywords</div>
+                            </td>
+                            <td th:text="${paper.author.name}">Author</td>
+                            <td class="small-text" th:text="${paper.conference.title}">Conference</td>
+                            <td class="small-text" th:text="${#temporals.format(paper.submittedAt, 'yyyy-MM-dd')}">Date</td>
+                            <td>
+                                <span th:class="'badge ' + (${paper.status == 'SUBMITTED'} ? 'bg-info' : (${paper.status == 'UNDER_REVIEW'} ? 'bg-warning' : (${paper.status == 'ACCEPTED'} ? 'bg-success' : 'bg-danger')))"
+                                      th:text="${paper.status}">STATUS</span>
+                            </td>
+                            <td class="text-end">
+                                <a th:href="@{/admin/paper/{id}(id=${paper.id})}" class="btn btn-primary btn-sm">
+                                    Evaluate <i class="bi bi-chevron-right ms-1"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

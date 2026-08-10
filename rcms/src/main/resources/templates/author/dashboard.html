@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: header-head('Author Portal')}"></head>
+<body>
+<div th:replace="~{fragments/header :: navbar}"></div>
+
+<main class="container-xl my-4">
+    <!-- Mobile Back Navigation -->
+    <div class="d-md-none mb-3">
+        <a th:href="@{/}" class="btn-mobile-back">
+            <i class="bi bi-arrow-left"></i> Back to Home
+        </a>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <h1 class="page-title"><i class="bi bi-pencil-square text-primary me-2"></i> Author Dashboard</h1>
+            <p class="small-text mb-0">Welcome, <strong th:text="${session.user.name}">Author</strong>. Track manuscript submission status.</p>
+        </div>
+        <a th:href="@{/author/submit-paper}" class="btn btn-primary btn-sm">
+            <i class="bi bi-upload me-1"></i> Submit New Paper
+        </a>
+    </div>
+
+    <!-- Metrics -->
+    <div class="row g-3 mb-3">
+        <div class="col-md-4">
+            <div class="stat-card d-flex align-items-center justify-content-between">
+                <div>
+                    <div class="stat-label">Total Submissions</div>
+                    <div class="stat-number" th:text="${totalSubmitted}">0</div>
+                </div>
+                <div class="stat-icon"><i class="bi bi-file-earmark-text"></i></div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="stat-card d-flex align-items-center justify-content-between">
+                <div>
+                    <div class="stat-label">Under Review</div>
+                    <div class="stat-number text-warning" th:text="${totalUnderReview}">0</div>
+                </div>
+                <div class="stat-icon text-warning"><i class="bi bi-hourglass-split"></i></div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="stat-card d-flex align-items-center justify-content-between">
+                <div>
+                    <div class="stat-label">Accepted Manuscripts</div>
+                    <div class="stat-number text-success" th:text="${totalAccepted}">0</div>
+                </div>
+                <div class="stat-icon text-success"><i class="bi bi-check-circle"></i></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Submissions Table -->
+    <div class="card-univ">
+        <div class="card-header-univ">My Submitted Manuscripts</div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-univ align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Paper Title &amp; Keywords</th>
+                            <th>Target Conference</th>
+                            <th>Submitted Date</th>
+                            <th>Status</th>
+                            <th class="text-end">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:if="${#lists.isEmpty(myPapers)}">
+                            <td colspan="6" class="text-center text-muted py-3">You have not submitted any research papers yet.</td>
+                        </tr>
+                        <tr th:each="paper : ${myPapers}">
+                            <td class="fw-bold text-muted">#<span th:text="${paper.id}">1</span></td>
+                            <td>
+                                <strong class="text-primary" th:text="${paper.title}">Title</strong>
+                                <div class="small-text" th:text="${paper.keywords}">Keywords</div>
+                            </td>
+                            <td class="small-text" th:text="${paper.conference.title}">Conference</td>
+                            <td class="small-text" th:text="${#temporals.format(paper.submittedAt, 'yyyy-MM-dd')}">Date</td>
+                            <td>
+                                <span th:class="'badge ' + (${paper.status == 'SUBMITTED'} ? 'bg-info' : (${paper.status == 'UNDER_REVIEW'} ? 'bg-warning' : (${paper.status == 'ACCEPTED'} ? 'bg-success' : 'bg-danger')))"
+                                      th:text="${paper.status}">STATUS</span>
+                            </td>
+                            <td class="text-end">
+                                <a th:href="@{/author/paper/{id}(id=${paper.id})}" class="btn btn-outline-primary btn-sm">
+                                    Details <i class="bi bi-chevron-right ms-1"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

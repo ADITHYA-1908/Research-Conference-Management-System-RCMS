@@ -1,0 +1,54 @@
+name: RCMS CI/CD Pipeline
+
+on:
+  push:
+    branches: [ "main", "develop" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  # ------------------------------------------------------------------------------
+  # Job 1: Build & Run Automated Unit Tests
+  # ------------------------------------------------------------------------------
+  build-test:
+    name: 🧪 Build & Test (Java 17 Maven)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: Build & Test with Maven
+        run: |
+          cd rcms
+          mvn clean test -B
+
+  # ------------------------------------------------------------------------------
+  # Job 2: Build & Verify Docker Image
+  # ------------------------------------------------------------------------------
+  docker-verify:
+    name: 🐳 Docker Build & Verify
+    needs: build-test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Test Docker Container Build
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          push: false
+          tags: rcms-web-app:test

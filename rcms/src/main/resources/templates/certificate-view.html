@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Certificate of Achievement - RCMS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <style>
+        body { background: #f1f5f9; font-family: 'Georgia', serif; }
+        .cert-container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: #ffffff;
+            border: 15px solid #1e293b;
+            padding: 50px;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            position: relative;
+        }
+        .cert-border {
+            border: 2px solid #d97706;
+            padding: 30px;
+        }
+        .cert-title {
+            font-size: 2.8rem;
+            color: #0f172a;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .cert-name {
+            font-size: 2.2rem;
+            color: #b45309;
+            font-weight: bold;
+            border-bottom: 2px solid #cbd5e1;
+            display: inline-block;
+            padding-bottom: 5px;
+            margin: 20px 0;
+        }
+        .qr-placeholder {
+            width: 100px;
+            height: 100px;
+            background: #0f172a;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-family: monospace;
+            text-align: center;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container d-flex justify-content-between align-items-center my-3 no-print">
+        <button type="button" onclick="handleMobileBack()" class="btn btn-outline-secondary btn-sm fw-semibold"><i class="bi bi-arrow-left me-1"></i> Back</button>
+        <div class="d-flex gap-2">
+            <button onclick="window.print()" class="btn btn-primary btn-sm"><i class="bi bi-printer me-1"></i> Print / Save as PDF</button>
+            <a th:href="@{/certificates/verify/{code}(code=${cert.certificateCode})}" class="btn btn-outline-dark btn-sm"><i class="bi bi-shield-check me-1"></i> Verify Authenticity</a>
+        </div>
+    </div>
+    <script>
+        function handleMobileBack() {
+            if (window.history.length > 1 && document.referrer && document.referrer.indexOf(window.location.host) !== -1) {
+                window.history.back();
+            } else {
+                window.location.href = '/certificates/verify';
+            }
+        }
+    </script>
+
+    <div class="cert-container">
+        <div class="cert-border text-center">
+            <div class="mb-3">
+                <i class="bi bi-award-fill text-warning display-4"></i>
+            </div>
+            <div class="cert-title">Certificate of <span th:text="${cert.type == 'AUTHOR' ? 'Presentation' : 'Participation'}">Participation</span></div>
+            <p class="text-muted text-uppercase tracking-wider mt-2">Research Conference Management System (RCMS)</p>
+
+            <div class="my-4">
+                <p class="fs-5 italic">This is proudly presented to</p>
+                <div class="cert-name" th:text="${cert.user.name}">Dr. Alan Turing</div>
+                <p class="fs-5">for successfully <span th:text="${cert.type == 'AUTHOR' ? 'presenting the paper' : 'participating in'}">participating in</span> the international conference</p>
+                <h4 class="fw-bold text-dark my-3" th:text="${cert.conference.title}">Conference Title</h4>
+                <p th:if="${cert.paper != null}" class="fst-italic text-secondary fs-6" th:text="${'Paper Title: &quot;' + cert.paper.title + '&quot;'}">Paper Title</p>
+            </div>
+
+            <div class="row align-items-end mt-5 text-start">
+                <div class="col-4">
+                    <div class="qr-placeholder">
+                        <div>
+                            <i class="bi bi-qr-code display-6 d-block mb-1"></i>
+                            <span th:text="${cert.certificateCode}">CODE</span>
+                        </div>
+                    </div>
+                    <small class="text-muted d-block mt-1">Digital QR Code Stamp</small>
+                </div>
+                <div class="col-4 text-center">
+                    <div class="fw-bold text-dark" th:text="${#temporals.format(cert.issueDate, 'MMMM dd, yyyy')}">Date</div>
+                    <small class="text-muted border-top border-secondary pt-1 d-block">Date of Issuance</small>
+                </div>
+                <div class="col-4 text-end">
+                    <div class="fw-bold text-dark">RCMS Academic Board</div>
+                    <small class="text-muted border-top border-secondary pt-1 d-block">Authorized Signature</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

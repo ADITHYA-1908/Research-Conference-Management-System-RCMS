@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: header-head('Manage Tracks')}"></head>
+<body>
+<div th:replace="~{fragments/header :: navbar}"></div>
+
+<main class="container-xl my-4">
+    <!-- Mobile Back Navigation -->
+    <div class="d-md-none mb-3">
+        <a th:href="@{/admin/dashboard}" class="btn-mobile-back">
+            <i class="bi bi-arrow-left"></i> Back to Admin Portal
+        </a>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <h1 class="page-title"><i class="bi bi-diagram-3 text-primary me-2"></i> Conference Track Management</h1>
+            <p class="small-text mb-0">Create and manage subject tracks for academic conferences.</p>
+        </div>
+        <a th:href="@{/admin/dashboard}" class="btn btn-outline-secondary btn-sm"><i class="bi bi-arrow-left me-1"></i> Back to Dashboard</a>
+    </div>
+
+    <div th:if="${param.saved}" class="alert alert-success py-2 small-text">Track saved successfully!</div>
+    <div th:if="${param.deleted}" class="alert alert-warning py-2 small-text">Track deleted.</div>
+
+    <div class="row g-3">
+        <!-- Add Track Form -->
+        <div class="col-md-4">
+            <div class="card-univ p-4">
+                <h5 class="fw-bold mb-3"><i class="bi bi-plus-circle me-1"></i> Add New Track</h5>
+                <form th:action="@{/admin/track/save}" th:object="${track}" method="post">
+                    <div class="mb-3">
+                        <label class="form-label">Target Conference</label>
+                        <select name="conferenceId" class="form-select" required>
+                            <option value="">Select Conference...</option>
+                            <option th:each="conf : ${conferences}" th:value="${conf.id}" th:text="${conf.title}"></option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Track Name</label>
+                        <input type="text" th:field="*{name}" class="form-control" placeholder="e.g. Artificial Intelligence &amp; ML" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Description</label>
+                        <textarea th:field="*{description}" class="form-control" rows="3" placeholder="Brief track scope..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100"><i class="bi bi-save me-1"></i> Save Track</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Tracks List -->
+        <div class="col-md-8">
+            <div class="card-univ">
+                <div class="card-header-univ"><i class="bi bi-list-stars me-2"></i> Existing Tracks</div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-univ align-middle mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Track Name</th>
+                                    <th>Conference</th>
+                                    <th>Description</th>
+                                    <th class="text-end">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:if="${#lists.isEmpty(tracks)}">
+                                    <td colspan="4" class="text-center text-muted py-3">No conference tracks created yet.</td>
+                                </tr>
+                                <tr th:each="t : ${tracks}">
+                                    <td class="fw-bold" th:text="${t.name}">Track Name</td>
+                                    <td><span class="badge bg-info text-dark" th:text="${t.conference.title}">Conf</span></td>
+                                    <td class="small-text" th:text="${t.description}">Desc</td>
+                                    <td class="text-end">
+                                        <form th:action="@{/admin/track/delete/{id}(id=${t.id})}" method="post" class="d-inline" onsubmit="return confirm('Delete this track?')">
+                                            <button type="submit" class="btn btn-outline-danger btn-sm"><i class="bi bi-trash"></i></button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

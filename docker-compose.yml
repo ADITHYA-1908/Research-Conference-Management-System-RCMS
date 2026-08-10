@@ -1,0 +1,67 @@
+# ==============================================================================
+# Research Conference Management System (RCMS)
+# Multi-Container Docker Compose Definition (MySQL 8.0 + Spring Boot Application)
+# ==============================================================================
+
+version: '3.8'
+
+services:
+  # MySQL Database Container
+  db:
+    image: mysql:8.0
+    container_name: rcms-mysql-db
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-rcms_db}
+      MYSQL_USER: ${MYSQL_USER:-rcms_user}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-rcms_password_2026}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rcms_root_password_2026}
+    ports:
+      - "${DB_PORT:-3306}:3306"
+    volumes:
+      - rcms-mysql-data:/var/lib/mysql
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD:-rcms_root_password_2026}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+
+  # Spring Boot Web Application Container
+  rcms-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: rcms-web-app
+    ports:
+      - "${SERVER_PORT:-8080}:8080"
+    environment:
+      SERVER_PORT: 8080
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-dev}
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_NAME: ${MYSQL_DATABASE:-rcms_db}
+      DB_USERNAME: ${MYSQL_USER:-rcms_user}
+      DB_PASSWORD: ${MYSQL_PASSWORD:-rcms_password_2026}
+      DATABASE_URL: jdbc:mysql://db:3306/${MYSQL_DATABASE:-rcms_db}?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      DB_DRIVER: com.mysql.cj.jdbc.Driver
+      DB_DIALECT: org.hibernate.dialect.MySQLDialect
+      UPLOAD_DIR: /app/uploads
+    volumes:
+      - rcms-uploads:/app/uploads
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 25s
+
+volumes:
+  rcms-mysql-data:
+    driver: local
+  rcms-uploads:
+    driver: local

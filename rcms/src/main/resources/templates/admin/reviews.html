@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: header-head('All Peer Reviews')}"></head>
+<body>
+<div th:replace="~{fragments/header :: navbar}"></div>
+
+<main class="container-xl my-4">
+    <!-- Mobile Back Navigation -->
+    <div class="d-md-none mb-3">
+        <a th:href="@{/admin/dashboard}" class="btn-mobile-back">
+            <i class="bi bi-arrow-left"></i> Back to Admin Portal
+        </a>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <h1 class="page-title"><i class="bi bi-chat-left-text text-primary me-2"></i> All Peer Reviews</h1>
+            <p class="small-text mb-0">Roster of all assigned and completed reviewer evaluations.</p>
+        </div>
+        <div>
+            <input type="text" class="form-control form-control-sm table-search-input" data-table-target="reviewsTable" placeholder="Filter reviews by reviewer/paper..." style="width: 250px;">
+        </div>
+    </div>
+
+    <div class="card-univ">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table id="reviewsTable" class="table table-univ align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Paper Title</th>
+                            <th>Reviewer Name</th>
+                            <th>Score</th>
+                            <th>Recommendation</th>
+                            <th>Status</th>
+                            <th>Reviewed Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:if="${#lists.isEmpty(reviews)}">
+                            <td colspan="7" class="text-center text-muted py-3">No reviews found.</td>
+                        </tr>
+                        <tr th:each="rev : ${reviews}">
+                            <td class="fw-bold text-muted">#<span th:text="${rev.id}">1</span></td>
+                            <td><strong class="text-primary" th:text="${rev.paper.title}">Paper Title</strong></td>
+                            <td th:text="${rev.reviewer.name}">Reviewer</td>
+                            <td><strong th:text="${rev.score != null ? rev.score + '/10' : '-'}">-</strong></td>
+                            <td><span class="badge bg-secondary" th:text="${rev.recommendation != null ? rev.recommendation : 'N/A'}">ACCEPT</span></td>
+                            <td>
+                                <span th:class="'badge ' + (${rev.status == 'COMPLETED'} ? 'bg-success' : 'bg-warning')"
+                                      th:text="${rev.status}">PENDING</span>
+                            </td>
+                            <td class="small-text" th:text="${rev.reviewedAt != null ? #temporals.format(rev.reviewedAt, 'yyyy-MM-dd HH:mm') : 'Pending'}">Date</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

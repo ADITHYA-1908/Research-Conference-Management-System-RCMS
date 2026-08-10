@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="header-head(title)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title} + ' - Research Conference Management System'">RCMS Academic Portal</title>
+    <!-- Official High-Resolution Tab Favicons -->
+    <link rel="icon" type="image/png" sizes="32x32" th:href="@{/images/favicon.png}">
+    <link rel="icon" type="image/x-icon" th:href="@{/favicon.ico}">
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/favicon.ico}">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <!-- Custom University Portal CSS -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark navbar-university shadow-sm">
+    <div class="container-xl">
+        <div class="d-flex align-items-center gap-2">
+            <!-- Mobile Top Navbar Back Button (Shown on mobile for all pages except Home and Login) -->
+            <button id="mobileNavBackBtn" type="button" class="btn btn-outline-light btn-sm d-lg-none align-items-center gap-1 shadow-sm px-2 py-1" onclick="handleMobileBack()" style="display: none !important; font-size: 0.82rem; font-weight: 600; border-color: rgba(255,255,255,0.4);">
+                <i class="bi bi-arrow-left fs-6"></i>
+                <span>Back</span>
+            </button>
+
+            <!-- High-Legibility Brand Logo -->
+            <a class="navbar-brand d-flex align-items-center gap-2 py-1 me-lg-3" th:href="@{/}">
+                <div class="brand-logo-badge d-flex align-items-center justify-content-center bg-white rounded-3 shadow-sm p-1" style="width: 38px; height: 38px;">
+                    <img th:src="@{/images/logo.png}" alt="RCMS Logo" class="img-fluid rounded-2" style="max-height: 100%; object-fit: contain;">
+                </div>
+                <div class="d-flex flex-column justify-content-center" style="line-height: 1.1;">
+                    <span class="fw-extrabold text-white brand-title" style="font-size: 1.35rem; letter-spacing: 1.5px; font-weight: 800;">RCMS</span>
+                    <span class="text-info opacity-90 brand-subtitle" style="font-size: 0.62rem; letter-spacing: 0.4px; font-weight: 600; text-transform: uppercase;">Research Conference Management System</span>
+                </div>
+            </a>
+        </div>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#univNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="univNavbar">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-3">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/}"><i class="bi bi-house-door me-1"></i> Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/conferences}"><i class="bi bi-calendar3 me-1"></i> Conferences</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/certificates/verify}"><i class="bi bi-patch-check me-1"></i> Verify Certificate</a>
+                </li>
+                <!-- Dynamic Role Links -->
+                <li class="nav-item" th:if="${session.user != null and session.user.role == 'ADMIN'}">
+                    <a class="nav-link text-warning fw-semibold" th:href="@{/admin/dashboard}"><i class="bi bi-shield-lock me-1"></i> Admin Portal</a>
+                </li>
+                <li class="nav-item" th:if="${session.user != null and session.user.role == 'AUTHOR'}">
+                    <a class="nav-link text-info fw-semibold" th:href="@{/author/dashboard}"><i class="bi bi-pencil-square me-1"></i> Author Portal</a>
+                </li>
+                <li class="nav-item" th:if="${session.user != null and session.user.role == 'REVIEWER'}">
+                    <a class="nav-link text-success fw-semibold" th:href="@{/reviewer/dashboard}"><i class="bi bi-check2-square me-1"></i> Reviewer Portal</a>
+                </li>
+            </ul>
+            <div class="d-flex align-items-center gap-2">
+                <div th:if="${session.user != null}" class="dropdown">
+                    <button class="btn btn-light btn-sm dropdown-toggle fw-semibold text-dark border" type="button" data-bs-toggle="dropdown">
+                        <i class="bi bi-person-circle text-primary me-1"></i>
+                        <span th:text="${session.user.name}">User Name</span>
+                        <span class="badge bg-secondary ms-1" th:text="${session.user.role}">ROLE</span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+                        <li th:if="${session.user.role == 'ADMIN'}">
+                            <a class="dropdown-item" th:href="@{/admin/tracks}"><i class="bi bi-diagram-3 me-2"></i> Manage Tracks</a>
+                        </li>
+                        <li th:if="${session.user.role == 'ADMIN'}">
+                            <a class="dropdown-item" th:href="@{/admin/users}"><i class="bi bi-people me-2"></i> User Directory</a>
+                        </li>
+                        <li th:if="${session.user.role == 'ADMIN'}">
+                            <a class="dropdown-item" th:href="@{/admin/certificates}"><i class="bi bi-award me-2"></i> Certificates</a>
+                        </li>
+                        <li th:if="${session.user.role == 'AUTHOR'}">
+                            <a class="dropdown-item" th:href="@{/author/profile}"><i class="bi bi-person-vcard me-2"></i> Profile Settings</a>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <a class="dropdown-item text-danger" th:href="@{/logout}"><i class="bi bi-box-arrow-right me-2"></i> Sign Out</a>
+                        </li>
+                    </ul>
+                </div>
+                <div th:if="${session.user == null}">
+                    <a th:href="@{/login}" class="btn btn-light btn-sm me-1"><i class="bi bi-box-arrow-in-right me-1"></i> Sign In</a>
+                    <a th:href="@{/register}" class="btn btn-outline-light btn-sm"><i class="bi bi-person-plus me-1"></i> Register</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Mobile Contextual Navigation Sub-bar (Excludes Home and Login Pages) -->
+<div id="mobileContextBackBar" class="d-lg-none bg-white border-bottom py-2 px-3 shadow-xs" style="display: none !important;">
+    <div class="container-xl d-flex align-items-center justify-content-between">
+        <button type="button" onclick="handleMobileBack()" class="btn-mobile-back">
+            <i class="bi bi-arrow-left"></i> <span>Back</span>
+        </button>
+        <span id="mobileBackContextLabel" class="text-muted small-text fw-semibold"></span>
+    </div>
+</div>
+
+<script>
+    function handleMobileBack() {
+        if (window.history.length > 1 && document.referrer && document.referrer.indexOf(window.location.host) !== -1) {
+            window.history.back();
+        } else {
+            var path = window.location.pathname.toLowerCase();
+            if (path.indexOf('/admin/dashboard') !== -1) {
+                window.location.href = '/';
+            } else if (path.indexOf('/admin') !== -1) {
+                window.location.href = '/admin/dashboard';
+            } else if (path.indexOf('/author/dashboard') !== -1) {
+                window.location.href = '/';
+            } else if (path.indexOf('/author') !== -1) {
+                window.location.href = '/author/dashboard';
+            } else if (path.indexOf('/reviewer/dashboard') !== -1) {
+                window.location.href = '/';
+            } else if (path.indexOf('/reviewer') !== -1) {
+                window.location.href = '/reviewer/dashboard';
+            } else if (path.indexOf('/conferences') !== -1) {
+                window.location.href = '/';
+            } else if (path.indexOf('/register') !== -1) {
+                window.location.href = '/login';
+            } else {
+                window.location.href = '/';
+            }
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var path = window.location.pathname.toLowerCase();
+        // Exclude Home page ('/' or '/index' or '/index.html') and Login page ('/login' or '/login.html')
+        var isHome = (path === '/' || path === '' || path === '/index' || path === '/index.html');
+        var isLogin = (path === '/login' || path === '/login.html');
+
+        var navBackBtn = document.getElementById('mobileNavBackBtn');
+        var contextBackBar = document.getElementById('mobileContextBackBar');
+        var contextLabel = document.getElementById('mobileBackContextLabel');
+
+        if (!isHome && !isLogin) {
+            if (navBackBtn) navBackBtn.style.setProperty('display', 'inline-flex', 'important');
+            if (contextBackBar) contextBackBar.style.setProperty('display', 'block', 'important');
+
+            if (contextLabel) {
+                if (path.indexOf('/admin/dashboard') !== -1) {
+                    contextLabel.textContent = 'Admin Overview';
+                } else if (path.indexOf('/admin') !== -1) {
+                    contextLabel.textContent = 'Admin Portal';
+                } else if (path.indexOf('/author/dashboard') !== -1) {
+                    contextLabel.textContent = 'Author Overview';
+                } else if (path.indexOf('/author') !== -1) {
+                    contextLabel.textContent = 'Author Portal';
+                } else if (path.indexOf('/reviewer/dashboard') !== -1) {
+                    contextLabel.textContent = 'Reviewer Overview';
+                } else if (path.indexOf('/reviewer') !== -1) {
+                    contextLabel.textContent = 'Reviewer Portal';
+                } else if (path.indexOf('/conferences') !== -1) {
+                    contextLabel.textContent = 'Conferences Directory';
+                } else if (path.indexOf('/register') !== -1) {
+                    contextLabel.textContent = 'Author Enrollment';
+                } else if (path.indexOf('/certificates') !== -1) {
+                    contextLabel.textContent = 'Certificate Registry';
+                } else {
+                    contextLabel.textContent = 'Academic Portal';
+                }
+            }
+        } else {
+            if (navBackBtn) navBackBtn.style.setProperty('display', 'none', 'important');
+            if (contextBackBar) contextBackBar.style.setProperty('display', 'none', 'important');
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: header-head('Conference Details')}"></head>
+<body>
+<div th:replace="~{fragments/header :: navbar}"></div>
+
+<main class="container-xl my-4">
+    <div class="mb-3">
+        <a href="javascript:handleMobileBack()" class="btn-mobile-back">
+            <i class="bi bi-arrow-left"></i> Back to Conferences Directory
+        </a>
+    </div>
+
+    <div th:if="${param.registered}" class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="bi bi-check-circle-fill me-2"></i> You have successfully registered for this conference!
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+
+    <div class="card-univ p-4 mb-4">
+        <div class="d-flex justify-content-between align-items-start mb-3">
+            <div>
+                <span th:class="'badge mb-2 ' + (${conference.status == 'OPEN'} ? 'bg-success' : (${conference.status == 'UPCOMING'} ? 'bg-primary' : 'bg-secondary'))"
+                      th:text="${conference.status}">STATUS</span>
+                <h1 class="page-title text-primary" th:text="${conference.title}">Conference Title</h1>
+                <h2 class="section-title text-secondary mb-0" th:text="${conference.theme}">Theme</h2>
+            </div>
+            <div class="d-flex gap-2">
+                <a th:href="@{/author/submit-paper}" th:if="${conference.status == 'OPEN' and session.user != null and session.user.role == 'AUTHOR'}" class="btn btn-primary">
+                    <i class="bi bi-upload me-1"></i> Submit Paper
+                </a>
+                <form th:action="@{/conferences/{id}/register(id=${conference.id})}" method="post" th:if="${session.user != null and !isRegistered}">
+                    <button type="submit" class="btn btn-success"><i class="bi bi-ticket-perforated me-1"></i> Register as Attendee</button>
+                </form>
+                <button th:if="${session.user != null and isRegistered}" class="btn btn-outline-success" disabled><i class="bi bi-check-circle me-1"></i> Registered</button>
+                <a th:href="@{/login?error=please_login}" th:if="${session.user == null}" class="btn btn-outline-primary"><i class="bi bi-box-arrow-in-right me-1"></i> Sign In to Register</a>
+            </div>
+        </div>
+
+        <hr class="my-3">
+
+        <div class="row g-3 mb-4">
+            <div class="col-md-4">
+                <div class="p-3 bg-light border rounded">
+                    <div class="stat-label mb-1"><i class="bi bi-calendar-event text-primary me-1"></i> Event Dates</div>
+                    <strong class="text-dark" th:text="${conference.startDate} + ' to ' + ${conference.endDate}">Dates</strong>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-3 bg-light border rounded">
+                    <div class="stat-label mb-1"><i class="bi bi-alarm text-warning me-1"></i> Submission Deadline</div>
+                    <strong class="text-dark" th:text="${conference.submissionDeadline}">Deadline</strong>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-3 bg-light border rounded">
+                    <div class="stat-label mb-1"><i class="bi bi-geo-alt text-danger me-1"></i> Location / Venue</div>
+                    <strong class="text-dark" th:text="${conference.location}">Venue</strong>
+                </div>
+            </div>
+        </div>
+
+        <!-- Conference Tracks -->
+        <div class="mb-4" th:if="${!#lists.isEmpty(tracks)}">
+            <h5 class="fw-bold mb-3"><i class="bi bi-diagram-3 text-info me-2"></i> Conference Subject Tracks</h5>
+            <div class="row g-2">
+                <div th:each="tr : ${tracks}" class="col-md-6">
+                    <div class="p-3 border rounded bg-white shadow-sm">
+                        <strong class="text-dark d-block mb-1" th:text="${tr.name}">Track Name</strong>
+                        <small class="text-muted" th:text="${tr.description}">Track Description</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-title mb-2"><i class="bi bi-info-circle me-1"></i> Call for Papers &amp; Description</h2>
+        <div class="p-3 bg-light border rounded text-secondary leading-relaxed" th:text="${conference.description}">Description...</div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

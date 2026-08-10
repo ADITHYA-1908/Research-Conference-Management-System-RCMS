@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: header-head('Submission Specification')}"></head>
+<body>
+<div th:replace="~{fragments/header :: navbar}"></div>
+
+<main class="container-xl my-4">
+    <div class="mb-3">
+        <a th:href="@{/author/dashboard}" class="btn-mobile-back">
+            <i class="bi bi-arrow-left"></i> Back to Author Portal
+        </a>
+    </div>
+
+    <div th:if="${param.withdrawn}" class="alert alert-warning py-2 small-text mb-3">
+        <i class="bi bi-exclamation-triangle-fill me-1"></i> This paper has been withdrawn from conference consideration.
+    </div>
+
+    <div class="card-univ p-4 mb-3">
+        <div class="d-flex justify-content-between align-items-start mb-2">
+            <span th:class="'badge ' + (${paper.status == 'SUBMITTED'} ? 'bg-info' : (${paper.status == 'UNDER_REVIEW'} ? 'bg-warning' : (${paper.status == 'ACCEPTED'} ? 'bg-success' : (${paper.status == 'WITHDRAWN'} ? 'bg-secondary' : 'bg-danger'))))"
+                  th:text="${paper.status}">STATUS</span>
+            <div class="d-flex align-items-center gap-3">
+                <span class="small-text">Submitted: <span th:text="${#temporals.format(paper.submittedAt, 'yyyy-MM-dd HH:mm')}">Date</span></span>
+                <form th:action="@{/author/paper/{id}/withdraw(id=${paper.id})}" method="post" th:if="${paper.status != 'WITHDRAWN' and paper.status != 'ACCEPTED'}">
+                    <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure you want to withdraw this paper submission?')">
+                        <i class="bi bi-x-circle me-1"></i> Withdraw Paper
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <h1 class="page-title text-primary mb-2" th:text="${paper.title}">Paper Title</h1>
+        <p class="small-text mb-3">
+            <strong>Target Conference:</strong> <span th:text="${paper.conference.title}">Conference</span>
+            <span th:if="${paper.track != null}" class="ms-2">| <strong>Track:</strong> <span th:text="${paper.track.name}">Track</span></span>
+        </p>
+
+        <hr class="my-3">
+
+        <div class="mb-3">
+            <div class="stat-label mb-1">Keywords</div>
+            <div class="small-text" th:text="${paper.keywords}">Keywords</div>
+        </div>
+
+        <div class="mb-3">
+            <div class="stat-label mb-1">Abstract</div>
+            <div class="p-3 bg-light border rounded small-text leading-relaxed" th:text="${paper.abstractText}">Abstract...</div>
+        </div>
+    </div>
+
+    <!-- Reviewer Feedback -->
+    <div class="card-univ">
+        <div class="card-header-univ">Peer Evaluation Feedback</div>
+        <div class="card-body p-3">
+            <div th:if="${#lists.isEmpty(reviews)}" class="small-text text-muted">
+                Evaluation currently in progress. Feedback will be visible once peer review is finalized.
+            </div>
+            <div class="list-group list-group-flush" th:unless="${#lists.isEmpty(reviews)}">
+                <div class="list-group-item px-0 py-2" th:each="rev : ${reviews}">
+                    <div th:if="${rev.status == 'COMPLETED'}">
+                        <div class="d-flex gap-2 mb-2">
+                            <span class="badge bg-primary">Score: <span th:text="${rev.score}">8</span>/10</span>
+                            <span class="badge bg-secondary">Recommendation: <span th:text="${rev.recommendation}">ACCEPT</span></span>
+                        </div>
+                        <div class="p-2 bg-light border rounded small-text text-secondary" th:text="${rev.comments}">Comments...</div>
+                    </div>
+                    <div th:if="${rev.status == 'PENDING'}" class="small-text text-muted fst-italic">
+                        Peer evaluation in progress.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

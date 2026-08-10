@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: header-head('Certificate Management')}"></head>
+<body>
+<div th:replace="~{fragments/header :: navbar}"></div>
+
+<main class="container-xl my-4">
+    <!-- Mobile Back Navigation -->
+    <div class="d-md-none mb-3">
+        <a th:href="@{/admin/dashboard}" class="btn-mobile-back">
+            <i class="bi bi-arrow-left"></i> Back to Admin Portal
+        </a>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <h1 class="page-title"><i class="bi bi-award-fill text-warning me-2"></i> Certificate Generation &amp; Issuance</h1>
+            <p class="small-text mb-0">Issue and manage digital certificates for conference participants and authors.</p>
+        </div>
+        <a th:href="@{/admin/dashboard}" class="btn btn-outline-secondary btn-sm"><i class="bi bi-arrow-left me-1"></i> Dashboard</a>
+    </div>
+
+    <div th:if="${param.issued}" class="alert alert-success py-2 small-text">Certificate issued successfully!</div>
+    <div th:if="${errorMessage}" class="alert alert-danger py-2 small-text" th:text="${errorMessage}">Error</div>
+
+    <div class="row g-3">
+        <!-- Issue Certificate Form -->
+        <div class="col-md-4">
+            <div class="card-univ p-4">
+                <h5 class="fw-bold mb-3"><i class="bi bi-patch-check-fill text-success me-1"></i> Issue Certificate</h5>
+                <form th:action="@{/admin/certificate/issue}" method="post">
+                    <div class="mb-3">
+                        <label class="form-label">Recipient User</label>
+                        <select name="userId" class="form-select" required>
+                            <option value="">Select Recipient...</option>
+                            <option th:each="u : ${users}" th:value="${u.id}" th:text="${u.name + ' (' + u.email + ')'}"></option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Conference</label>
+                        <select name="conferenceId" class="form-select" required>
+                            <option value="">Select Conference...</option>
+                            <option th:each="c : ${conferences}" th:value="${c.id}" th:text="${c.title}"></option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Certificate Type</label>
+                        <select name="type" class="form-select" required>
+                            <option value="AUTHOR">Paper Author Presentation</option>
+                            <option value="PARTICIPANT">Conference Participation</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Associated Paper (Optional)</label>
+                        <select name="paperId" class="form-select">
+                            <option value="">None / General Participant</option>
+                            <option th:each="p : ${papers}" th:value="${p.id}" th:text="${p.title}"></option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-warning text-dark w-100 fw-bold"><i class="bi bi-award me-1"></i> Generate &amp; Issue</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Certificates List -->
+        <div class="col-md-8">
+            <div class="card-univ">
+                <div class="card-header-univ"><i class="bi bi-file-earmark-pdf me-2"></i> Issued Certificates</div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-univ align-middle mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Code</th>
+                                    <th>Recipient</th>
+                                    <th>Type</th>
+                                    <th>Conference</th>
+                                    <th>Issue Date</th>
+                                    <th class="text-end">View</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:if="${#lists.isEmpty(certificates)}">
+                                    <td colspan="6" class="text-center text-muted py-3">No certificates issued yet.</td>
+                                </tr>
+                                <tr th:each="cert : ${certificates}">
+                                    <td><code class="fw-bold text-primary" th:text="${cert.certificateCode}">CODE1234</code></td>
+                                    <td class="fw-semibold" th:text="${cert.user.name}">User Name</td>
+                                    <td><span class="badge bg-secondary" th:text="${cert.type}">AUTHOR</span></td>
+                                    <td class="small-text" th:text="${cert.conference.title}">Conf Title</td>
+                                    <td class="small-text" th:text="${cert.issueDate}">2026-07-29</td>
+                                    <td class="text-end">
+                                        <a th:href="@{/certificates/download/{id}(id=${cert.id})}" target="_blank" class="btn btn-sm btn-outline-primary"><i class="bi bi-eye"></i> View</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

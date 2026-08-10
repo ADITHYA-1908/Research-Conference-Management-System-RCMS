@@ -1,0 +1,424 @@
+/* Research Conference Management System (RCMS) - University Academic Portal Style */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+    --color-primary: #1E3A8A;
+    --color-secondary: #2563EB;
+    --color-bg: #F8FAFC;
+    --color-card-bg: #FFFFFF;
+    --color-border: #CBD5E1;
+    --color-text-main: #1E293B;
+    --color-text-muted: #64748B;
+    --color-success: #16A34A;
+    --color-warning: #D97706;
+    --color-danger: #DC2626;
+    --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --radius-main: 6px;
+}
+
+body {
+    background-color: var(--color-bg);
+    color: var(--color-text-main);
+    font-family: var(--font-family);
+    font-size: 15px;
+    line-height: 1.5;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
+
+/* Typography Specifications */
+.page-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--color-text-main);
+    letter-spacing: -0.02em;
+    margin-bottom: 0.25rem;
+}
+
+.section-title {
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--color-text-main);
+}
+
+.table-heading {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--color-text-main);
+}
+
+.small-text {
+    font-size: 13px;
+    color: var(--color-text-muted);
+}
+
+/* Compact Navbar (60-64px height) */
+.navbar-university {
+    background-color: var(--color-primary);
+    min-height: 64px;
+    border-bottom: 2px solid #172554;
+}
+
+.navbar-university .navbar-brand {
+    font-size: 18px;
+    font-weight: 700;
+    color: #FFFFFF !important;
+}
+
+.navbar-university .nav-link {
+    color: #E2E8F0 !important;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 0.4rem 0.75rem;
+    border-radius: 4px;
+}
+
+.navbar-university .nav-link:hover, .navbar-university .nav-link.active {
+    color: #FFFFFF !important;
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Academic Welcome Section */
+.welcome-banner {
+    background-color: var(--color-card-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-main);
+    padding: 1.5rem;
+    min-height: 180px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Dashboard Statistic Cards */
+.stat-card {
+    background-color: var(--color-card-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-main);
+    padding: 1rem;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.08);
+}
+
+.stat-card .stat-icon {
+    color: var(--color-primary);
+    font-size: 1.5rem;
+}
+
+.stat-card .stat-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.stat-card .stat-number {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--color-text-main);
+    margin-top: 0.15rem;
+}
+
+/* Cards */
+.card-univ {
+    background-color: var(--color-card-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-main);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+}
+
+.card-header-univ {
+    background-color: #F1F5F9;
+    border-bottom: 1px solid var(--color-border);
+    padding: 0.75rem 1rem;
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--color-text-main);
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: var(--color-primary) !important;
+    border-color: var(--color-primary) !important;
+    border-radius: var(--radius-main);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.btn-primary:hover {
+    background-color: var(--color-secondary) !important;
+    border-color: var(--color-secondary) !important;
+}
+
+.btn-outline-primary {
+    color: var(--color-primary) !important;
+    border-color: var(--color-primary) !important;
+    border-radius: var(--radius-main);
+    font-size: 14px;
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--color-primary) !important;
+    color: #FFFFFF !important;
+}
+
+.btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 13px;
+}
+
+/* Tables */
+.table-univ {
+    width: 100%;
+    margin-bottom: 0;
+    font-size: 14px;
+}
+
+.table-univ th {
+    background-color: #F1F5F9;
+    color: var(--color-text-muted);
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    padding: 0.65rem 0.85rem;
+    border-bottom: 2px solid var(--color-border);
+}
+
+.table-univ td {
+    padding: 0.65rem 0.85rem;
+    vertical-align: middle;
+    border-bottom: 1px solid #E2E8F0;
+    color: var(--color-text-main);
+}
+
+.table-univ tbody tr:hover {
+    background-color: #F1F5F9;
+}
+
+/* Forms */
+.form-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-text-main);
+    margin-bottom: 0.3rem;
+}
+
+.form-control, .form-select {
+    font-size: 14px;
+    border-color: var(--color-border);
+    border-radius: var(--radius-main);
+    padding: 0.45rem 0.75rem;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 0.15rem rgba(30, 58, 138, 0.15);
+}
+
+/* Status Badges */
+.badge {
+    font-size: 12px;
+    font-weight: 600;
+    padding: 0.35em 0.65em;
+    border-radius: 4px;
+}
+
+/* Footer */
+.footer-univ {
+    background-color: #1E293B;
+    color: #94A3B8;
+    font-size: 13px;
+    padding: 1rem 0;
+    border-top: 1px solid #334155;
+}
+
+/* Mobile Back Navigation Button */
+.btn-mobile-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    background-color: #EFF6FF;
+    border: 1px solid #BFDBFE;
+    padding: 0.35rem 0.75rem;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+.btn-mobile-back:hover, .btn-mobile-back:focus {
+    background-color: var(--color-primary);
+    color: #FFFFFF;
+    border-color: var(--color-primary);
+}
+
+/* ============================================================
+   Mobile Responsive Overrides
+   ============================================================ */
+
+/* Tablets and below (< 768px) */
+@media (max-width: 767.98px) {
+    /* Scale down page titles */
+    .page-title {
+        font-size: 22px;
+        letter-spacing: -0.01em;
+    }
+    .section-title {
+        font-size: 18px;
+    }
+
+    /* Stat cards: tighter padding */
+    .stat-card {
+        padding: 0.75rem;
+    }
+    .stat-card .stat-number {
+        font-size: 20px;
+    }
+    .stat-card .stat-icon {
+        font-size: 1.25rem;
+    }
+    .stat-card .stat-label {
+        font-size: 11px;
+    }
+
+    /* Welcome banner: reduce padding */
+    .welcome-banner {
+        padding: 1rem;
+        min-height: auto;
+    }
+
+    /* Tables: smaller text to prevent overflow */
+    .table-univ th {
+        font-size: 11px;
+        padding: 0.5rem 0.5rem;
+        white-space: nowrap;
+    }
+    .table-univ td {
+        font-size: 12px;
+        padding: 0.5rem 0.5rem;
+    }
+
+    /* Badge: keep status text on one line, shrink font */
+    .badge {
+        font-size: 10px;
+        white-space: nowrap;
+        padding: 0.3em 0.5em;
+    }
+
+    /* Nav tabs: horizontal scroll instead of wrapping */
+    .nav-tabs-academic {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+    .nav-tabs-academic::-webkit-scrollbar {
+        display: none;
+    }
+    .nav-tabs-academic .nav-link {
+        white-space: nowrap;
+        font-size: 13px;
+        padding: 0.4rem 0.65rem;
+    }
+
+    /* Forms: full-width on mobile */
+    .form-control, .form-select {
+        font-size: 14px;
+    }
+
+    /* Buttons: full-width stacking on mobile */
+    .btn {
+        font-size: 13px;
+    }
+
+    /* Cards: reduce margin */
+    .card-univ {
+        border-radius: var(--radius-main);
+    }
+    .card-header-univ {
+        padding: 0.6rem 0.75rem;
+        font-size: 14px;
+    }
+
+    /* Table search input: full-width on mobile */
+    .table-search-input {
+        width: 100% !important;
+    }
+
+    /* Footer: tighter on mobile */
+    .footer-univ {
+        font-size: 12px;
+        padding: 0.75rem 0;
+    }
+}
+
+/* Small phones (< 576px) */
+@media (max-width: 575.98px) {
+    .page-title {
+        font-size: 20px;
+    }
+    .section-title {
+        font-size: 16px;
+    }
+
+    body {
+        font-size: 14px;
+    }
+
+    /* Stat cards: even tighter */
+    .stat-card .stat-number {
+        font-size: 18px;
+    }
+    .stat-card .stat-label {
+        font-size: 10px;
+    }
+    .stat-card .stat-icon {
+        font-size: 1.1rem;
+    }
+
+    /* Welcome banner: compact */
+    .welcome-banner {
+        padding: 0.75rem;
+    }
+
+    /* Navbar brand: scale down subtitle */
+    .navbar-university .navbar-brand {
+        font-size: 16px;
+    }
+    .brand-subtitle {
+        display: none !important;
+    }
+    .brand-title {
+        font-size: 1.15rem !important;
+    }
+
+    /* Hide table columns that overflow on very small screens */
+    .table-univ th,
+    .table-univ td {
+        font-size: 11px;
+        padding: 0.4rem 0.35rem;
+    }
+
+    /* Stack action buttons vertically on very small screens */
+    .d-flex.gap-2 {
+        gap: 0.35rem !important;
+    }
+}
+
+/* Print Utility */
+@media print {
+    .no-print { display: none !important; }
+}

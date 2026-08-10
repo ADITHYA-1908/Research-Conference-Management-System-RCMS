@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: header-head('Author Directory')}"></head>
+<body>
+<div th:replace="~{fragments/header :: navbar}"></div>
+
+<main class="container-xl my-4">
+    <!-- Mobile Back Navigation -->
+    <div class="d-md-none mb-3">
+        <a th:href="@{/admin/dashboard}" class="btn-mobile-back">
+            <i class="bi bi-arrow-left"></i> Back to Admin Portal
+        </a>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <h1 class="page-title"><i class="bi bi-people text-primary me-2"></i> Registered Authors Directory</h1>
+            <p class="small-text mb-0">Roster of research authors registered in the system.</p>
+        </div>
+        <div>
+            <input type="text" class="form-control form-control-sm table-search-input" data-table-target="authorsTable" placeholder="Filter authors by name/institution..." style="width: 250px;">
+        </div>
+    </div>
+
+    <div class="card-univ">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table id="authorsTable" class="table table-univ align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Author Name &amp; Bio</th>
+                            <th>Email Address</th>
+                            <th>Institution / University</th>
+                            <th>Phone</th>
+                            <th>Registered Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:if="${#lists.isEmpty(authors)}">
+                            <td colspan="6" class="text-center text-muted py-3">No registered authors found.</td>
+                        </tr>
+                        <tr th:each="author : ${authors}">
+                            <td class="fw-bold text-muted">#<span th:text="${author.id}">1</span></td>
+                            <td>
+                                <strong class="text-dark" th:text="${author.name}">Author Name</strong>
+                                <div class="small-text" th:text="${author.bio}">Bio</div>
+                            </td>
+                            <td th:text="${author.email}">Email</td>
+                            <td th:text="${author.institution}">Institution</td>
+                            <td class="small-text" th:text="${author.phone}">Phone</td>
+                            <td class="small-text" th:text="${#temporals.format(author.createdAt, 'yyyy-MM-dd HH:mm')}">Date</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

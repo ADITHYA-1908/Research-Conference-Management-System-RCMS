@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: header-head('Submit Manuscript')}"></head>
+<body>
+<div th:replace="~{fragments/header :: navbar}"></div>
+
+<main class="container-xl my-4">
+    <div class="mb-3">
+        <a th:href="@{/author/dashboard}" class="btn-mobile-back">
+            <i class="bi bi-arrow-left"></i> Back to Author Portal
+        </a>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card-univ p-4">
+                <h2 class="section-title text-primary mb-2">
+                    <i class="bi bi-upload me-2"></i> Submit Research Manuscript
+                </h2>
+                <p class="small-text mb-0">Select an open conference and track, then submit your manuscript for peer review.</p>
+                <hr class="my-3">
+
+                <div th:if="${errorMessage}" class="alert alert-danger py-2 small-text" th:text="${errorMessage}">Error</div>
+
+                <form th:action="@{/author/submit-paper}" th:object="${paper}" method="post" enctype="multipart/form-data">
+                    <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger py-2 small-text mb-3">
+                        <ul class="mb-0 ps-3">
+                            <li th:each="err : ${#fields.errors('*')}" th:text="${err}">Validation Error</li>
+                        </ul>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Target Conference *</label>
+                        <select class="form-select" name="conferenceId" required th:if="${not #lists.isEmpty(conferences)}">
+                            <option value="">-- Select Open Conference --</option>
+                            <option th:each="conf : ${conferences}" th:value="${conf.id}" th:text="${conf.title} + ' (Deadline: ' + ${conf.submissionDeadline} + ')'">Conference</option>
+                        </select>
+                        <div th:if="${#lists.isEmpty(conferences)}" class="alert alert-warning py-2 mb-0 small-text">No active conferences open for submission.</div>
+                    </div>
+
+                    <div class="mb-3" th:if="${not #lists.isEmpty(tracks)}">
+                        <label class="form-label">Conference Track (Optional)</label>
+                        <select class="form-select" name="trackId">
+                            <option value="">-- General Track / No Track --</option>
+                            <option th:each="tr : ${tracks}" th:value="${tr.id}" th:text="${tr.name + ' (' + tr.conference.title + ')'}">Track Name</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Manuscript Title *</label>
+                        <input type="text" class="form-control" th:field="*{title}" placeholder="Full research paper title" required>
+                        <div class="text-danger small-text mt-1" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Keywords *</label>
+                        <input type="text" class="form-control" th:field="*{keywords}" placeholder="e.g. Artificial Intelligence, Neural Networks, IoT" required>
+                        <div class="text-danger small-text mt-1" th:if="${#fields.hasErrors('keywords')}" th:errors="*{keywords}"></div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Abstract *</label>
+                        <textarea class="form-control" th:field="*{abstractText}" rows="5" placeholder="Summary of research methodology and findings..." required></textarea>
+                        <div class="text-danger small-text mt-1" th:if="${#fields.hasErrors('abstractText')}" th:errors="*{abstractText}"></div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label">PDF Manuscript File *</label>
+                        <input type="file" class="form-control" name="file" accept=".pdf" required>
+                        <div class="small-text mt-1">Accepted formats: PDF (.pdf). Max file size: 10MB.</div>
+                        <div class="text-danger small-text mt-1" th:if="${#fields.hasErrors('filePath')}" th:errors="*{filePath}"></div>
+                    </div>
+
+                    <div class="d-flex gap-2 justify-content-end">
+                        <a th:href="@{/author/dashboard}" class="btn btn-secondary btn-sm">Cancel</a>
+                        <button type="submit" class="btn btn-primary btn-sm" th:disabled="${#lists.isEmpty(conferences)}">
+                            <i class="bi bi-send me-1"></i> Submit Manuscript
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

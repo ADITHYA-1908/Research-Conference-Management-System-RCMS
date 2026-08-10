@@ -1,0 +1,37 @@
+# ==============================================================================
+# Research Conference Management System (RCMS) - Master Git Ignore
+# ==============================================================================
+
+# Target Build Output
+target/
+**/target/
+*.class
+*.jar
+*.war
+
+# Environment & Secrets Configuration
+.env
+*.env
+!.env.example
+
+# Runtime File Uploads & Application Logs
+uploads/
+**/uploads/
+*.log
+**/logs/
+
+# IDE Configuration & Metadata
+.idea/
+*.iml
+.vscode/
+.settings/
+.classpath
+.project
+
+# System & OS Artifacts
+.DS_Store
+Thumbs.db
+
+# Bundled Dependencies
+apache-maven-3.9.9/
+

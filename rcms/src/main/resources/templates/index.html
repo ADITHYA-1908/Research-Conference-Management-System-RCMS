@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: header-head('Home')}"></head>
+<body>
+<div th:replace="~{fragments/header :: navbar}"></div>
+
+<main class="container-xl my-4">
+    <!-- Academic Hero & Dynamic CTA Section -->
+    <div class="welcome-banner mb-4 shadow-sm position-relative overflow-hidden">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <div class="d-flex align-items-center gap-2 mb-1">
+                    <span class="badge bg-primary-subtle text-primary border border-primary-subtle px-2 py-1 uppercase fw-semibold">
+                        <i class="bi bi-bank me-1"></i> Academic Research Portal
+                    </span>
+                    <span class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1 uppercase fw-semibold">
+                        <i class="bi bi-shield-check me-1"></i> System Active
+                    </span>
+                </div>
+                <h1 class="page-title mt-1 mb-2">Research Conference Management System</h1>
+                <p class="text-secondary mb-3 pe-lg-3">
+                    Centralized university platform for manuscript submission, double-blind peer evaluation, proceedings publication, and verifiable digital certificates.
+                </p>
+                <div class="d-flex flex-wrap gap-2">
+                    <!-- Guest Actions -->
+                    <a th:href="@{/conferences}" class="btn btn-primary">
+                        <i class="bi bi-compass me-1"></i> Browse Conferences
+                    </a>
+                    <a th:href="@{/register}" th:if="${session.user == null}" class="btn btn-outline-primary">
+                        <i class="bi bi-pencil-square me-1"></i> Author Registration
+                    </a>
+                    <a th:href="@{/login}" th:if="${session.user == null}" class="btn btn-light border text-dark">
+                        <i class="bi bi-box-arrow-in-right me-1"></i> Sign In
+                    </a>
+
+                    <!-- Logged-in Role Actions -->
+                    <a th:href="@{/author/submit-paper}" th:if="${session.user != null and session.user.role == 'AUTHOR'}" class="btn btn-success">
+                        <i class="bi bi-file-earmark-plus me-1"></i> Submit Research Paper
+                    </a>
+                    <a th:href="@{/author/dashboard}" th:if="${session.user != null and session.user.role == 'AUTHOR'}" class="btn btn-outline-primary">
+                        <i class="bi bi-speedometer2 me-1"></i> My Author Dashboard
+                    </a>
+
+                    <a th:href="@{/reviewer/dashboard}" th:if="${session.user != null and session.user.role == 'REVIEWER'}" class="btn btn-success">
+                        <i class="bi bi-check2-circle me-1"></i> Reviewer Portal
+                    </a>
+
+                    <a th:href="@{/admin/dashboard}" th:if="${session.user != null and session.user.role == 'ADMIN'}" class="btn btn-warning text-dark fw-semibold">
+                        <i class="bi bi-shield-lock me-1"></i> Admin Dashboard
+                    </a>
+                </div>
+            </div>
+            <!-- Quick Inline Certificate Verification Widget -->
+            <div class="col-lg-4 mt-3 mt-lg-0">
+                <div class="card border-0 bg-light p-3 rounded-3 border-start border-primary border-4 shadow-sm">
+                    <div class="d-flex align-items-center gap-2 mb-2">
+                        <i class="bi bi-patch-check-fill text-primary fs-5"></i>
+                        <h6 class="mb-0 fw-bold text-dark">Verify Certificate</h6>
+                    </div>
+                    <p class="small text-muted mb-2">Instant authenticity lookup for issued academic credentials:</p>
+                    <form th:action="@{/certificates/verify}" method="post" class="d-flex gap-2">
+                        <input type="text" name="certificateCode" class="form-control form-control-sm text-uppercase fw-semibold" placeholder="e.g. CERT-12345678" required>
+                        <button type="submit" class="btn btn-primary btn-sm text-nowrap">
+                            <i class="bi bi-search me-1"></i> Verify
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Live Metric Statistic Cards -->
+    <div class="row g-3 mb-4">
+        <div class="col-md-3 col-6">
+            <div class="stat-card h-100 d-flex align-items-center justify-content-between p-3">
+                <div>
+                    <div class="stat-label text-muted">Active Conferences</div>
+                    <div class="stat-number fw-bold text-primary fs-3" th:text="${openConferencesCount}">1</div>
+                    <div class="small-text text-muted" th:text="'out of ' + ${totalConferences} + ' total directory'">1 Total</div>
+                </div>
+                <div class="stat-icon text-primary opacity-75 fs-2"><i class="bi bi-calendar-event"></i></div>
+            </div>
+        </div>
+        <div class="col-md-3 col-6">
+            <div class="stat-card h-100 d-flex align-items-center justify-content-between p-3">
+                <div>
+                    <div class="stat-label text-muted">Submitted Papers</div>
+                    <div class="stat-number fw-bold text-success fs-3" th:text="${totalPapers}">0</div>
+                    <div class="small-text text-muted" th:text="${acceptedPapersCount} + ' Accepted'">0 Accepted</div>
+                </div>
+                <div class="stat-icon text-success opacity-75 fs-2"><i class="bi bi-file-earmark-text"></i></div>
+            </div>
+        </div>
+        <div class="col-md-3 col-6">
+            <div class="stat-card h-100 d-flex align-items-center justify-content-between p-3">
+                <div>
+                    <div class="stat-label text-muted">Registered Authors</div>
+                    <div class="stat-number fw-bold text-info fs-3" th:text="${totalAuthors}">0</div>
+                    <div class="small-text text-muted" th:text="${totalReviewers} + ' Peer Reviewers'">0 Reviewers</div>
+                </div>
+                <div class="stat-icon text-info opacity-75 fs-2"><i class="bi bi-people"></i></div>
+            </div>
+        </div>
+        <div class="col-md-3 col-6">
+            <div class="stat-card h-100 d-flex align-items-center justify-content-between p-3">
+                <div>
+                    <div class="stat-label text-muted">Certificates Issued</div>
+                    <div class="stat-number fw-bold text-warning fs-3" th:text="${totalCertificates}">0</div>
+                    <div class="small-text text-muted"><i class="bi bi-check-circle-fill text-success me-1"></i>Verifiable</div>
+                </div>
+                <div class="stat-icon text-warning opacity-75 fs-2"><i class="bi bi-award"></i></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Open Conferences Table Section -->
+    <div class="card-univ mb-4 shadow-sm">
+        <div class="card-header-univ d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2 py-3 px-3">
+            <div class="d-flex align-items-center gap-2">
+                <i class="bi bi-megaphone-fill text-primary fs-5"></i>
+                <span class="fw-bold fs-6">Conferences Currently Open for Submission</span>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+                <input type="text" id="tableSearchInput" class="form-control form-control-sm" style="max-width: 220px;" placeholder="Filter conferences...">
+                <a th:href="@{/conferences}" class="btn btn-outline-primary btn-sm text-nowrap">View Full Directory</a>
+            </div>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive" th:unless="${#lists.isEmpty(openConferences)}">
+                <table class="table table-univ align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th>Conference Title &amp; Theme</th>
+                            <th>Venue / Location</th>
+                            <th class="text-nowrap">Start Date</th>
+                            <th class="text-nowrap">Submission Deadline</th>
+                            <th>Status</th>
+                            <th class="text-end text-nowrap">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="conf : ${openConferences}">
+                            <td>
+                                <a th:href="@{/conferences/{id}(id=${conf.id})}" class="fw-bold text-primary text-decoration-none" th:text="${conf.title}">Conference Title</a>
+                                <div class="small-text text-muted" th:text="${conf.theme}">Theme details</div>
+                            </td>
+                            <td>
+                                <i class="bi bi-geo-alt text-secondary me-1"></i>
+                                <span class="small-text" th:text="${conf.location}">Venue</span>
+                            </td>
+                            <td class="text-nowrap small-text">
+                                <i class="bi bi-calendar3 me-1 text-muted"></i>
+                                <span th:text="${conf.startDate}">2026-10-15</span>
+                            </td>
+                            <td class="text-nowrap">
+                                <span class="badge bg-light text-dark border px-2 py-1">
+                                    <i class="bi bi-clock me-1 text-danger"></i>
+                                    <span th:text="${conf.submissionDeadline}">2026-09-30</span>
+                                </span>
+                            </td>
+                            <td>
+                                <span class="badge bg-success px-2 py-1" th:text="${conf.status}">OPEN</span>
+                            </td>
+                            <td class="text-end text-nowrap">
+                                <a th:href="@{/conferences/{id}(id=${conf.id})}" class="btn btn-primary btn-sm px-3">
+                                    Details &amp; Submit <i class="bi bi-chevron-right ms-1"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="p-4 text-center text-muted" th:if="${#lists.isEmpty(openConferences)}">
+                <i class="bi bi-info-circle fs-3 d-block mb-2 text-secondary"></i>
+                No open conferences are currently accepting submissions. Check the <a th:href="@{/conferences}" class="text-primary fw-semibold">full directory</a>.
+            </div>
+        </div>
+    </div>
+
+    <!-- Academic System Workflow Highlights -->
+    <div class="row g-3 mb-4">
+        <div class="col-12">
+            <h5 class="section-title mb-3 d-flex align-items-center gap-2">
+                <i class="bi bi-diagram-3-fill text-primary"></i> Academic Conference Lifecycle Workflow
+            </h5>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="card h-100 border-0 shadow-sm rounded-3 p-3 bg-white">
+                <div class="d-flex align-items-center gap-3 mb-2">
+                    <div class="bg-primary-subtle text-primary rounded-circle p-2 d-flex align-items-center justify-content-center" style="width: 42px; height: 42px;">
+                        <i class="bi bi-file-earmark-arrow-up fs-4"></i>
+                    </div>
+                    <div>
+                        <div class="badge bg-primary-subtle text-primary mb-1">Step 1</div>
+                        <h6 class="fw-bold mb-0">Manuscript Upload</h6>
+                    </div>
+                </div>
+                <p class="small text-muted mb-0">Authors submit full PDF manuscripts to specific research tracks with domain metadata.</p>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="card h-100 border-0 shadow-sm rounded-3 p-3 bg-white">
+                <div class="d-flex align-items-center gap-3 mb-2">
+                    <div class="bg-info-subtle text-info rounded-circle p-2 d-flex align-items-center justify-content-center" style="width: 42px; height: 42px;">
+                        <i class="bi bi-search fs-4"></i>
+                    </div>
+                    <div>
+                        <div class="badge bg-info-subtle text-info mb-1">Step 2</div>
+                        <h6 class="fw-bold mb-0">Peer Review</h6>
+                    </div>
+                </div>
+                <p class="small text-muted mb-0">Assigned expert reviewers evaluate submissions with scored criteria and feedback.</p>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="card h-100 border-0 shadow-sm rounded-3 p-3 bg-white">
+                <div class="d-flex align-items-center gap-3 mb-2">
+                    <div class="bg-warning-subtle text-warning-emphasis rounded-circle p-2 d-flex align-items-center justify-content-center" style="width: 42px; height: 42px;">
+                        <i class="bi bi-journal-check fs-4"></i>
+                    </div>
+                    <div>
+                        <div class="badge bg-warning-subtle text-warning-emphasis mb-1">Step 3</div>
+                        <h6 class="fw-bold mb-0">Proceedings</h6>
+                    </div>
+                </div>
+                <p class="small text-muted mb-0">Accepted papers are indexed into official conference proceedings and track schedules.</p>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="card h-100 border-0 shadow-sm rounded-3 p-3 bg-white">
+                <div class="d-flex align-items-center gap-3 mb-2">
+                    <div class="bg-success-subtle text-success rounded-circle p-2 d-flex align-items-center justify-content-center" style="width: 42px; height: 42px;">
+                        <i class="bi bi-award fs-4"></i>
+                    </div>
+                    <div>
+                        <div class="badge bg-success-subtle text-success mb-1">Step 4</div>
+                        <h6 class="fw-bold mb-0">Verification</h6>
+                    </div>
+                </div>
+                <p class="small text-muted mb-0">Digital certificates are issued with verifiable QR codes and anti-tamper security hashes.</p>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

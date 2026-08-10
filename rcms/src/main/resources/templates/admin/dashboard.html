@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: header-head('Admin Dashboard')}"></head>
+<body>
+<div th:replace="~{fragments/header :: navbar}"></div>
+
+<main class="container-xl my-4">
+    <!-- Mobile Back Navigation -->
+    <div class="d-md-none mb-3">
+        <a th:href="@{/}" class="btn-mobile-back">
+            <i class="bi bi-arrow-left"></i> Back to Home
+        </a>
+    </div>
+
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-3 gap-2">
+        <div>
+            <h1 class="page-title"><i class="bi bi-shield-lock text-primary me-2"></i>System Administration Portal</h1>
+            <p class="small-text mb-0">System metrics, conference chair control, and paper assignments.</p>
+        </div>
+        <div class="d-flex gap-2">
+            <a th:href="@{/admin/conference/new}" class="btn btn-primary btn-sm text-nowrap">
+                <i class="bi bi-plus-lg me-1"></i>Add Conference
+            </a>
+            <a th:href="@{/admin/papers}" class="btn btn-outline-primary btn-sm text-nowrap">
+                <i class="bi bi-file-earmark-text me-1"></i>Manage Papers
+            </a>
+        </div>
+    </div>
+
+    <!-- Metric Statistic Cards -->
+    <div class="row g-3 mb-3">
+        <div class="col-md-3">
+            <div class="stat-card d-flex align-items-center justify-content-between">
+                <div>
+                    <div class="stat-label">Conferences</div>
+                    <div class="stat-number" th:text="${totalConferences}">0</div>
+                </div>
+                <div class="stat-icon"><i class="bi bi-calendar3"></i></div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card d-flex align-items-center justify-content-between">
+                <div>
+                    <div class="stat-label">Total Papers</div>
+                    <div class="stat-number text-info" th:text="${totalPapers}">0</div>
+                </div>
+                <div class="stat-icon text-info"><i class="bi bi-file-earmark-text"></i></div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card d-flex align-items-center justify-content-between">
+                <div>
+                    <div class="stat-label">Under Review</div>
+                    <div class="stat-number text-warning" th:text="${underReviewPapers}">0</div>
+                </div>
+                <div class="stat-icon text-warning"><i class="bi bi-hourglass-split"></i></div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card d-flex align-items-center justify-content-between">
+                <div>
+                    <div class="stat-label">Registered Authors</div>
+                    <div class="stat-number text-success" th:text="${totalAuthors}">0</div>
+                </div>
+                <div class="stat-icon text-success"><i class="bi bi-people"></i></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Navigation Tabs -->
+    <ul class="nav nav-tabs nav-tabs-academic mb-3">
+        <li class="nav-item">
+            <a class="nav-link active" th:href="@{/admin/dashboard}"><i class="bi bi-clock-history me-1"></i> Submissions Overview</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/admin/conferences}"><i class="bi bi-calendar3 me-1"></i> Conferences</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/admin/papers}"><i class="bi bi-file-earmark-text me-1"></i> All Papers</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/admin/authors}"><i class="bi bi-people me-1"></i> Authors</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/admin/reviews}"><i class="bi bi-chat-left-text me-1"></i> Reviews</a>
+        </li>
+    </ul>
+
+    <!-- Submissions Table -->
+    <div class="card-univ">
+        <div class="card-header-univ">Recent Manuscripts Overview</div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-univ align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Paper Title</th>
+                            <th>Author</th>
+                            <th>Conference</th>
+                            <th>Status</th>
+                            <th class="text-end">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:if="${#lists.isEmpty(recentPapers)}">
+                            <td colspan="6" class="text-center text-muted py-3">No submitted papers found.</td>
+                        </tr>
+                        <tr th:each="paper : ${recentPapers}">
+                            <td class="fw-bold text-muted">#<span th:text="${paper.id}">1</span></td>
+                            <td><strong class="text-primary" th:text="${paper.title}">Title</strong></td>
+                            <td th:text="${paper.author.name}">Author</td>
+                            <td class="small-text" th:text="${paper.conference.title}">Conference</td>
+                            <td>
+                                <span th:class="'badge ' + (${paper.status == 'SUBMITTED'} ? 'bg-info' : (${paper.status == 'UNDER_REVIEW'} ? 'bg-warning' : (${paper.status == 'ACCEPTED'} ? 'bg-success' : 'bg-danger')))"
+                                      th:text="${paper.status}">STATUS</span>
+                            </td>
+                            <td class="text-end">
+                                <a th:href="@{/admin/paper/{id}(id=${paper.id})}" class="btn btn-outline-primary btn-sm">
+                                    Manage <i class="bi bi-chevron-right ms-1"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

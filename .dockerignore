@@ -1,0 +1,20 @@
+# Maven & Package Artifacts
+target/
+rcms/target/
+*.jar
+*.war
+
+# Version Control & IDE Metadata
+.git/
+.gitignore
+.vscode/
+.idea/
+*.iml
+
+# Local Logs & Upload Storage
+*.log
+logs/
+rcms/logs/
+uploads/
+.env
+.DS_Store

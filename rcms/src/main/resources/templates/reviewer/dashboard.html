@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: header-head('Reviewer Portal')}"></head>
+<body>
+<div th:replace="~{fragments/header :: navbar}"></div>
+
+<main class="container-xl my-4">
+    <!-- Mobile Back Navigation -->
+    <div class="d-md-none mb-3">
+        <a th:href="@{/}" class="btn-mobile-back">
+            <i class="bi bi-arrow-left"></i> Back to Home
+        </a>
+    </div>
+
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-3 gap-2">
+        <div>
+            <h1 class="page-title"><i class="bi bi-check2-square text-primary me-2"></i> Peer Reviewer Dashboard</h1>
+            <p class="small-text mb-0">Welcome, <strong th:text="${session.user.name}">Reviewer</strong>. Peer evaluation management.</p>
+        </div>
+        <a th:href="@{/reviewer/papers}" class="btn btn-primary btn-sm">
+            <i class="bi bi-list-task me-1"></i> Assigned Papers
+        </a>
+    </div>
+
+    <!-- Metrics -->
+    <div class="row g-3 mb-3">
+        <div class="col-md-4">
+            <div class="stat-card d-flex align-items-center justify-content-between">
+                <div>
+                    <div class="stat-label">Total Assigned</div>
+                    <div class="stat-number" th:text="${totalAssigned}">0</div>
+                </div>
+                <div class="stat-icon"><i class="bi bi-file-earmark-text"></i></div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="stat-card d-flex align-items-center justify-content-between">
+                <div>
+                    <div class="stat-label">Pending Reviews</div>
+                    <div class="stat-number text-warning" th:text="${pendingReviews}">0</div>
+                </div>
+                <div class="stat-icon text-warning"><i class="bi bi-hourglass-split"></i></div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="stat-card d-flex align-items-center justify-content-between">
+                <div>
+                    <div class="stat-label">Completed Reviews</div>
+                    <div class="stat-number text-success" th:text="${completedReviews}">0</div>
+                </div>
+                <div class="stat-icon text-success"><i class="bi bi-check-circle"></i></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Assigned Table -->
+    <div class="card-univ">
+        <div class="card-header-univ">Assigned Peer Assignments</div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-univ align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Paper Title &amp; Keywords</th>
+                            <th>Target Conference</th>
+                            <th>Status</th>
+                            <th class="text-end">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:if="${#lists.isEmpty(reviews)}">
+                            <td colspan="5" class="text-center text-muted py-3">No paper assignments found.</td>
+                        </tr>
+                        <tr th:each="rev : ${reviews}">
+                            <td class="fw-bold text-muted">#<span th:text="${rev.id}">1</span></td>
+                            <td>
+                                <strong class="text-primary" th:text="${rev.paper.title}">Title</strong>
+                                <div class="small-text" th:text="${rev.paper.keywords}">Keywords</div>
+                            </td>
+                            <td class="small-text" th:text="${rev.paper.conference.title}">Conference</td>
+                            <td>
+                                <span th:class="'badge ' + (${rev.status == 'COMPLETED'} ? 'bg-success' : 'bg-warning')"
+                                      th:text="${rev.status}">PENDING</span>
+                            </td>
+                            <td class="text-end">
+                                <a th:if="${rev.status == 'PENDING'}" th:href="@{/reviewer/review-form/{id}(id=${rev.id})}" class="btn btn-primary btn-sm">
+                                    <i class="bi bi-pencil"></i> Evaluate
+                                </a>
+                                <a th:if="${rev.status == 'COMPLETED'}" th:href="@{/reviewer/review-detail/{id}(id=${rev.id})}" class="btn btn-outline-secondary btn-sm">
+                                    View Evaluation
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

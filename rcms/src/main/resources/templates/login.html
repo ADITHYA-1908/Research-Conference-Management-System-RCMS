@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: header-head('Portal Sign In')}"></head>
+<body>
+<div th:replace="~{fragments/header :: navbar}"></div>
+
+<main class="container-xl my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card-univ p-4">
+                <div class="text-center mb-4">
+                    <div class="d-inline-flex align-items-center gap-2 p-2 rounded-3 bg-white border mb-2 shadow-sm">
+                        <div class="d-flex align-items-center justify-content-center bg-primary-subtle rounded-2 p-1" style="width: 40px; height: 40px;">
+                            <img th:src="@{/images/logo.png}" alt="RCMS Logo" class="img-fluid rounded-2" style="max-height: 100%; object-fit: contain;">
+                        </div>
+                        <div class="text-start" style="line-height: 1.1;">
+                            <div class="fw-bold text-primary" style="font-size: 1.4rem; letter-spacing: 1.5px;">RCMS</div>
+                            <div class="text-muted" style="font-size: 0.62rem; font-weight: 600; text-transform: uppercase;">Research Conference Management System</div>
+                        </div>
+                    </div>
+                    <h2 class="section-title mb-1">Academic Portal Sign In</h2>
+                    <p class="small-text text-muted mb-0">Enter your official credentials to access the portal.</p>
+                </div>
+
+                <div th:if="${errorMessage}" class="alert alert-danger py-2 small-text" th:text="${errorMessage}">Error</div>
+                <div th:if="${successMessage}" class="alert alert-success py-2 small-text" th:text="${successMessage}">Success</div>
+                <div th:if="${infoMessage}" class="alert alert-info py-2 small-text" th:text="${infoMessage}">Info</div>
+
+                <form th:action="@{/login}" th:object="${loginDto}" method="post">
+                    <div class="mb-3">
+                        <label class="form-label">Email Address *</label>
+                        <input type="email" id="emailInput" class="form-control" th:field="*{email}" placeholder="user@university.edu" autocomplete="username" required>
+                        <div class="text-danger small-text mt-1" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Password *</label>
+                        <input type="password" id="passwordInput" class="form-control" th:field="*{password}" placeholder="Enter password" autocomplete="current-password" required>
+                        <div class="text-danger small-text mt-1" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100 py-2">
+                        <i class="bi bi-box-arrow-in-right me-1"></i> Sign In
+                    </button>
+                </form>
+
+                <hr class="my-3">
+
+                <!-- Demo Login Helper -->
+                <div class="bg-light p-2 border rounded">
+                    <div class="stat-label mb-2"><i class="bi bi-lightning-charge text-warning me-1"></i> Quick Login Fill</div>
+                    <div class="d-flex flex-column gap-1">
+                        <button type="button" class="btn btn-outline-secondary btn-sm text-start" onclick="fillLogin('admin@rcms.com', 'admin123')">
+                            <strong>Admin:</strong> admin@rcms.com / admin123
+                        </button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm text-start" onclick="fillLogin('author@rcms.com', 'password123')">
+                            <strong>Author:</strong> author@rcms.com / password123
+                        </button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm text-start" onclick="fillLogin('reviewer@rcms.com', 'password123')">
+                            <strong>Reviewer:</strong> reviewer@rcms.com / password123
+                        </button>
+                    </div>
+                </div>
+
+                <div class="text-center mt-3">
+                    <span class="small-text">New Author?</span>
+                    <a th:href="@{/register}" class="fw-semibold text-primary small-text ms-1">Create Author Account</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script>
+    function fillLogin(email, pass) {
+        document.getElementById('emailInput').value = email;
+        document.getElementById('passwordInput').value = pass;
+    }
+</script>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

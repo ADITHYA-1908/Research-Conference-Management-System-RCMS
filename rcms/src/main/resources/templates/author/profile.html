@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: header-head('Profile Settings')}"></head>
+<body>
+<div th:replace="~{fragments/header :: navbar}"></div>
+
+<main class="container-xl my-4">
+    <!-- Mobile Back Navigation -->
+    <div class="d-md-none mb-3">
+        <a th:href="@{/author/dashboard}" class="btn-mobile-back">
+            <i class="bi bi-arrow-left"></i> Back to Dashboard
+        </a>
+    </div>
+
+    <div class="row justify-content-center g-4">
+        <div class="col-md-7">
+            <!-- Profile Info Card -->
+            <div class="card-univ p-4 mb-4">
+                <h2 class="section-title text-primary mb-3">
+                    <i class="bi bi-person-vcard me-2"></i> Author Profile Settings
+                </h2>
+                <hr class="my-3">
+
+                <div th:if="${successMessage}" class="alert alert-success py-2 small-text" th:text="${successMessage}">Success</div>
+
+                <form th:action="@{/author/profile}" method="post">
+                    <div class="mb-3">
+                        <label class="form-label">Full Name *</label>
+                        <input type="text" class="form-control" name="name" th:value="${user.name}" autocomplete="name" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Email Address (Read Only)</label>
+                        <input type="email" class="form-control bg-light" th:value="${user.email}" readonly disabled>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Institution / University</label>
+                            <input type="text" class="form-control" name="institution" th:value="${user.institution}">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Phone Number</label>
+                            <input type="text" class="form-control" name="phone" th:value="${user.phone}">
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Research Bio</label>
+                        <textarea class="form-control" name="bio" rows="3" th:text="${user.bio}"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-sm">
+                        <i class="bi bi-save me-1"></i> Update Profile Info
+                    </button>
+                </form>
+            </div>
+
+            <!-- Password Update Card -->
+            <div class="card-univ p-4">
+                <h5 class="fw-bold mb-3"><i class="bi bi-key-fill text-warning me-2"></i> Update Password</h5>
+                <div th:if="${passwordSuccess}" class="alert alert-success py-2 small-text" th:text="${passwordSuccess}">Success</div>
+                <div th:if="${passwordError}" class="alert alert-danger py-2 small-text" th:text="${passwordError}">Error</div>
+
+                <form th:action="@{/author/profile/update-password}" method="post">
+                    <div class="mb-3">
+                        <label class="form-label">Current Password *</label>
+                        <input type="password" name="currentPassword" class="form-control" autocomplete="current-password" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">New Password *</label>
+                        <input type="password" name="newPassword" class="form-control" placeholder="At least 6 characters" autocomplete="new-password" required>
+                    </div>
+                    <button type="submit" class="btn btn-warning text-dark btn-sm fw-bold"><i class="bi bi-lock me-1"></i> Change Password</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>
