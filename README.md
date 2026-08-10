@@ -196,8 +196,8 @@ Research-Conference-Management-System/
 |:---|:---|:---|
 | **Arjun S** | [@ARJUN-AIML](https://github.com/ARJUN-AIML) | Developer |
 | **Adithya Natarajan M** | [@ADITHYA-1908](https://github.com/ADITHYA-1908) | Co-Developer |
-| **Kamalesh K** | [@Kamalesh-aiml](https://github.com/Kamalesh-aiml) | Co-Developer |
 | **Ajay Kumar M** | *[GitHub TBD]* | Co-Developer |
+| **Kamalesh K** | [@Kamalesh-aiml](https://github.com/Kamalesh-aiml) | Co-Developer |
 
 ---
 
