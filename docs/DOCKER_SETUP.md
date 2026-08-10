@@ -106,3 +106,26 @@ depends_on:
 ```
 
 The database container runs `mysqladmin ping` to verify that MySQL has initialized its database engine and accepted TCP socket connections BEFORE Spring Boot starts. This prevents connection timeouts during application startup.
+
+---
+
+## 5. Render.com + Neon Cloud PostgreSQL Deployment
+
+When deploying the Docker container to **Render.com** connected to **Neon PostgreSQL**, set the following Environment Variables in the Render Dashboard:
+
+```env
+# Activate PostgreSQL Spring Profile (Auto-configures org.postgresql.Driver & PostgreSQLDialect)
+SPRING_PROFILES_ACTIVE=postgres
+
+# Neon PostgreSQL Database Connection
+DATABASE_URL=jdbc:postgresql://<neon-host>/<database>?sslmode=require
+DB_USERNAME=<neon-username>
+DB_PASSWORD=<neon-password>
+
+# Schema Management & Storage Settings
+DDL_AUTO=update
+UPLOAD_DIR=/app/uploads
+```
+
+> 💡 **Pro-Tip**: Setting `SPRING_PROFILES_ACTIVE=postgres` ensures Spring Boot automatically pairs the `org.postgresql.Driver` driver and `PostgreSQLDialect` with your Neon database URL.
+
