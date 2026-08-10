@@ -1,0 +1,140 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 4 0 R /Resources << /Font << /F1 5 0 R >> >> >>
+endobj
+4 0 obj
+<< /Length 3875 >>
+stream
+BT
+/F1 11 Tf
+1 0 0 1 50 750 Tm
+/F1 13 Tf
+(RESEARCH PAPER) Tj
+/F1 11 Tf
+1 0 0 1 50 734 Tm
+() Tj
+1 0 0 1 50 718 Tm
+/F1 13 Tf
+(Anomaly Detection in IoT Networks Using Federated Machine Learning) Tj
+/F1 11 Tf
+1 0 0 1 50 702 Tm
+() Tj
+1 0 0 1 50 686 Tm
+/F1 13 Tf
+(Authors: Dr. Grace Hopper, Prof. Donald Knuth, Dr. Tim Berners-Lee) Tj
+/F1 11 Tf
+1 0 0 1 50 670 Tm
+() Tj
+1 0 0 1 50 654 Tm
+/F1 13 Tf
+(ABSTRACT) Tj
+/F1 11 Tf
+1 0 0 1 50 638 Tm
+() Tj
+1 0 0 1 50 622 Tm
+(The proliferation of Internet of Things devices has introduced unprecedented security) Tj
+1 0 0 1 50 606 Tm
+(challenges in modern network infrastructures. This paper proposes a federated) Tj
+1 0 0 1 50 590 Tm
+(learning-based anomaly detection framework for identifying malicious traffic patterns in) Tj
+1 0 0 1 50 574 Tm
+(heterogeneous IoT environments. Our approach enables distributed model training across) Tj
+1 0 0 1 50 558 Tm
+(edge nodes without centralizing sensitive network data, thereby preserving privacy while) Tj
+1 0 0 1 50 542 Tm
+(maintaining detection accuracy. Experimental evaluation on the CIC-IoT-2023 and N-BaIoT) Tj
+1 0 0 1 50 526 Tm
+(benchmark datasets demonstrates that our federated approach achieves 96.2 percent) Tj
+1 0 0 1 50 510 Tm
+(detection accuracy with a false positive rate below 1.8 percent, comparable to centralized) Tj
+1 0 0 1 50 494 Tm
+(baselines while reducing data transmission overhead by 78 percent.) Tj
+1 0 0 1 50 478 Tm
+() Tj
+1 0 0 1 50 462 Tm
+/F1 13 Tf
+(Keywords: IoT Security, Federated Learning, Anomaly Detection, Network Intrusion Detection, Edge Computing, Privacy) Tj
+/F1 11 Tf
+1 0 0 1 50 446 Tm
+() Tj
+1 0 0 1 50 430 Tm
+/F1 13 Tf
+(1. INTRODUCTION) Tj
+/F1 11 Tf
+1 0 0 1 50 414 Tm
+(The rapid expansion of Internet of Things ecosystems has created vast attack surfaces) Tj
+1 0 0 1 50 398 Tm
+(that traditional perimeter-based security models cannot adequately protect. By 2025, an) Tj
+1 0 0 1 50 382 Tm
+(estimated 75 billion IoT devices are projected to be deployed globally, generating massive) Tj
+1 0 0 1 50 366 Tm
+(volumes of heterogeneous network traffic. Centralized monitoring approaches face) Tj
+1 0 0 1 50 350 Tm
+(scalability limitations and raise significant privacy concerns when processing data from) Tj
+1 0 0 1 50 334 Tm
+(distributed sensor networks. Federated learning offers a promising paradigm for) Tj
+1 0 0 1 50 318 Tm
+(collaborative model training that keeps raw data at the network edge.) Tj
+1 0 0 1 50 302 Tm
+() Tj
+1 0 0 1 50 286 Tm
+/F1 13 Tf
+(2. SYSTEM ARCHITECTURE) Tj
+/F1 11 Tf
+1 0 0 1 50 270 Tm
+(Our proposed framework consists of three principal components: \(1\) lightweight traffic) Tj
+1 0 0 1 50 254 Tm
+(feature extractors deployed on IoT gateway nodes, \(2\) local anomaly detection models) Tj
+1 0 0 1 50 238 Tm
+(trained using gradient-based federated optimization, and \(3\) a central aggregation server) Tj
+1 0 0 1 50 222 Tm
+(that coordinates model updates using secure aggregation protocols. Each edge node) Tj
+1 0 0 1 50 206 Tm
+(maintains a local Random Forest and LSTM hybrid model that processes network flow) Tj
+1 0 0 1 50 190 Tm
+(statistics including packet rates, byte distributions, and protocol entropy measurements.) Tj
+1 0 0 1 50 174 Tm
+() Tj
+1 0 0 1 50 158 Tm
+/F1 13 Tf
+(3. EXPERIMENTAL EVALUATION) Tj
+/F1 11 Tf
+1 0 0 1 50 142 Tm
+(We evaluate our framework using two established IoT security benchmarks. The CIC-IoT-2023) Tj
+1 0 0 1 50 126 Tm
+(dataset contains 33 attack categories across smart home, industrial, and healthcare IoT) Tj
+1 0 0 1 50 110 Tm
+(scenarios. The N-BaIoT dataset comprises traffic from nine commercial IoT devices under) Tj
+1 0 0 1 50 94 Tm
+(both benign and botnet-infected conditions. Our federated approach achieves an F1-score of) Tj
+1 0 0 1 50 78 Tm
+/F1 13 Tf
+(0.954 on CIC-IoT-2023 and 0.968 on N-BaIoT, with convergence achieved within 15) Tj
+/F1 11 Tf
+1 0 0 1 50 62 Tm
+(communication rounds.) Tj
+ET
+endstream
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000241 00000 n 
+0000004168 00000 n 
+trailer
+<< /Size 6 /Root 1 0 R >>
+startxref
+4238
+%%EOF

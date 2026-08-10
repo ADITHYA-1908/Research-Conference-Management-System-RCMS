@@ -1,0 +1,138 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 4 0 R /Resources << /Font << /F1 5 0 R >> >> >>
+endobj
+4 0 obj
+<< /Length 3754 >>
+stream
+BT
+/F1 11 Tf
+1 0 0 1 50 750 Tm
+/F1 13 Tf
+(RESEARCH PAPER) Tj
+/F1 11 Tf
+1 0 0 1 50 734 Tm
+() Tj
+1 0 0 1 50 718 Tm
+/F1 13 Tf
+(Deep Learning Approaches for Medical Image Classification: A Comparative Study) Tj
+/F1 11 Tf
+1 0 0 1 50 702 Tm
+() Tj
+1 0 0 1 50 686 Tm
+/F1 13 Tf
+(Authors: Dr. Alan Turing, Dr. Barbara Liskov, Prof. Ada Lovelace) Tj
+/F1 11 Tf
+1 0 0 1 50 670 Tm
+() Tj
+1 0 0 1 50 654 Tm
+/F1 13 Tf
+(ABSTRACT) Tj
+/F1 11 Tf
+1 0 0 1 50 638 Tm
+() Tj
+1 0 0 1 50 622 Tm
+(This paper presents a comprehensive comparative analysis of deep learning architectures) Tj
+1 0 0 1 50 606 Tm
+(for medical image classification tasks. We evaluate Convolutional Neural Networks \(CNNs\),) Tj
+1 0 0 1 50 590 Tm
+(Vision Transformers \(ViTs\), and hybrid architectures across three benchmark medical) Tj
+1 0 0 1 50 574 Tm
+(imaging datasets: ChestX-ray14, ISIC 2019 \(dermoscopy\), and PathMNIST \(histopathology\).) Tj
+1 0 0 1 50 558 Tm
+(Our experiments demonstrate that hybrid CNN-Transformer models achieve state-of-the-art) Tj
+1 0 0 1 50 542 Tm
+(accuracy of 94.7 percent on chest X-ray classification while maintaining computational) Tj
+1 0 0 1 50 526 Tm
+(efficiency suitable for clinical deployment. We further propose an ensemble strategy) Tj
+1 0 0 1 50 510 Tm
+(combining ResNet-50, EfficientNet-B4, and Swin Transformer that yields a 2.3 percent) Tj
+1 0 0 1 50 494 Tm
+(improvement over individual model baselines. Statistical significance tests confirm the) Tj
+1 0 0 1 50 478 Tm
+(robustness of our findings across all evaluation metrics including AUC-ROC, F1-score, and) Tj
+1 0 0 1 50 462 Tm
+(sensitivity.) Tj
+1 0 0 1 50 446 Tm
+() Tj
+1 0 0 1 50 430 Tm
+/F1 13 Tf
+(Keywords: Deep Learning, Medical Imaging, CNN, Vision Transformer, Transfer Learning, Classification) Tj
+/F1 11 Tf
+1 0 0 1 50 414 Tm
+() Tj
+1 0 0 1 50 398 Tm
+/F1 13 Tf
+(1. INTRODUCTION) Tj
+/F1 11 Tf
+1 0 0 1 50 382 Tm
+(Medical image analysis has witnessed transformative advances through the application of) Tj
+1 0 0 1 50 366 Tm
+(deep learning techniques. Traditional computer-aided diagnosis systems relied heavily on) Tj
+1 0 0 1 50 350 Tm
+(handcrafted features and domain-specific preprocessing pipelines. The emergence of) Tj
+1 0 0 1 50 334 Tm
+(convolutional neural networks revolutionized this paradigm by enabling end-to-end feature) Tj
+1 0 0 1 50 318 Tm
+(learning directly from raw pixel data. Recent developments in attention mechanisms and) Tj
+1 0 0 1 50 302 Tm
+(transformer architectures have further expanded the methodological toolkit available to) Tj
+1 0 0 1 50 286 Tm
+(researchers. This study systematically compares these architectural families across) Tj
+1 0 0 1 50 270 Tm
+(standardized evaluation protocols.) Tj
+1 0 0 1 50 254 Tm
+() Tj
+1 0 0 1 50 238 Tm
+/F1 13 Tf
+(2. RELATED WORK) Tj
+/F1 11 Tf
+1 0 0 1 50 222 Tm
+(Prior work in medical image classification includes the seminal CheXNet architecture by) Tj
+1 0 0 1 50 206 Tm
+(Rajpurkar et al. which demonstrated radiologist-level performance on pneumonia detection.) Tj
+1 0 0 1 50 190 Tm
+(Subsequent studies explored transfer learning from ImageNet-pretrained models, with) Tj
+1 0 0 1 50 174 Tm
+(DenseNet-121 and InceptionV3 emerging as popular backbone choices. The introduction of) Tj
+1 0 0 1 50 158 Tm
+(Vision Transformers by Dosovitskiy et al. opened new avenues for capturing global) Tj
+1 0 0 1 50 142 Tm
+(contextual information in medical images. Recent hybrid approaches such as TransMed and) Tj
+1 0 0 1 50 126 Tm
+(MedViT attempt to combine the inductive biases of CNNs with the long-range dependency) Tj
+1 0 0 1 50 110 Tm
+(modeling of transformers.) Tj
+1 0 0 1 50 94 Tm
+() Tj
+1 0 0 1 50 78 Tm
+/F1 13 Tf
+(3. METHODOLOGY) Tj
+/F1 11 Tf
+1 0 0 1 50 62 Tm
+(We adopt a standardized experimental framework comprising three phases: data) Tj
+ET
+endstream
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000241 00000 n 
+0000004047 00000 n 
+trailer
+<< /Size 6 /Root 1 0 R >>
+startxref
+4117
+%%EOF

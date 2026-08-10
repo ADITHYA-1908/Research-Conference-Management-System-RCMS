@@ -1,0 +1,138 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 4 0 R /Resources << /Font << /F1 5 0 R >> >> >>
+endobj
+4 0 obj
+<< /Length 3711 >>
+stream
+BT
+/F1 11 Tf
+1 0 0 1 50 750 Tm
+/F1 13 Tf
+(RESEARCH PAPER) Tj
+/F1 11 Tf
+1 0 0 1 50 734 Tm
+() Tj
+1 0 0 1 50 718 Tm
+/F1 13 Tf
+(Optimizing Serverless Function Placement in Edge-Cloud Continuum Architectures) Tj
+/F1 11 Tf
+1 0 0 1 50 702 Tm
+() Tj
+1 0 0 1 50 686 Tm
+/F1 13 Tf
+(Authors: Dr. Vint Cerf, Prof. Leslie Lamport, Dr. Shafi Goldwasser) Tj
+/F1 11 Tf
+1 0 0 1 50 670 Tm
+() Tj
+1 0 0 1 50 654 Tm
+/F1 13 Tf
+(ABSTRACT) Tj
+/F1 11 Tf
+1 0 0 1 50 638 Tm
+() Tj
+1 0 0 1 50 622 Tm
+(Serverless computing paradigms are increasingly being extended from centralized cloud) Tj
+1 0 0 1 50 606 Tm
+(platforms to geographically distributed edge infrastructure. This paper addresses the) Tj
+1 0 0 1 50 590 Tm
+(function placement optimization problem in edge-cloud continuum environments, where) Tj
+1 0 0 1 50 574 Tm
+(latency-sensitive workloads must be dynamically allocated across heterogeneous computing) Tj
+1 0 0 1 50 558 Tm
+(nodes. We formulate the placement decision as a constrained optimization problem and) Tj
+1 0 0 1 50 542 Tm
+(propose a reinforcement learning-based scheduler that reduces average end-to-end latency) Tj
+1 0 0 1 50 526 Tm
+(by 41 percent compared to round-robin baselines while maintaining resource utilization) Tj
+1 0 0 1 50 510 Tm
+(above 82 percent. Evaluation on a 12-node testbed with realistic microservice workloads) Tj
+1 0 0 1 50 494 Tm
+(validates the practical applicability of our approach.) Tj
+1 0 0 1 50 478 Tm
+() Tj
+1 0 0 1 50 462 Tm
+/F1 13 Tf
+(Keywords: Serverless Computing, Edge Computing, Function Placement, Reinforcement Learning, Latency Optimization, Microservices) Tj
+/F1 11 Tf
+1 0 0 1 50 446 Tm
+() Tj
+1 0 0 1 50 430 Tm
+/F1 13 Tf
+(1. INTRODUCTION) Tj
+/F1 11 Tf
+1 0 0 1 50 414 Tm
+(The evolution of cloud computing toward edge-cloud continuum architectures demands new) Tj
+1 0 0 1 50 398 Tm
+(approaches to workload orchestration. Traditional serverless platforms such as AWS Lambda) Tj
+1 0 0 1 50 382 Tm
+(and Azure Functions operate within centralized data centers, introducing latency penalties) Tj
+1 0 0 1 50 366 Tm
+(for geographically distributed applications. Edge computing promises sub-10ms response) Tj
+1 0 0 1 50 350 Tm
+(times by processing data closer to its source, but heterogeneous resource availability and) Tj
+1 0 0 1 50 334 Tm
+(dynamic demand patterns complicate scheduling decisions.) Tj
+1 0 0 1 50 318 Tm
+() Tj
+1 0 0 1 50 302 Tm
+/F1 13 Tf
+(2. PROBLEM FORMULATION) Tj
+/F1 11 Tf
+1 0 0 1 50 286 Tm
+(We model the edge-cloud continuum as a weighted graph G = \(V, E\) where vertices represent) Tj
+1 0 0 1 50 270 Tm
+(computing nodes with heterogeneous CPU, memory, and GPU capacities, and edges represent) Tj
+1 0 0 1 50 254 Tm
+(network links with measured latency and bandwidth characteristics. The function placement) Tj
+1 0 0 1 50 238 Tm
+(problem seeks to assign incoming serverless invocations to computing nodes that minimize) Tj
+1 0 0 1 50 222 Tm
+(aggregate response latency subject to resource capacity constraints and data locality) Tj
+1 0 0 1 50 206 Tm
+(preferences.) Tj
+1 0 0 1 50 190 Tm
+() Tj
+1 0 0 1 50 174 Tm
+/F1 13 Tf
+(3. PROPOSED APPROACH) Tj
+/F1 11 Tf
+1 0 0 1 50 158 Tm
+(Our reinforcement learning scheduler employs a Proximal Policy Optimization agent that) Tj
+1 0 0 1 50 142 Tm
+(observes system state vectors comprising current node utilizations, pending request) Tj
+1 0 0 1 50 126 Tm
+(queues, and historical latency measurements. The action space corresponds to node) Tj
+1 0 0 1 50 110 Tm
+(selection decisions, and the reward signal combines negative latency with resource balance) Tj
+1 0 0 1 50 94 Tm
+(penalties. We train the agent using simulated workload traces derived from Azure Function) Tj
+1 0 0 1 50 78 Tm
+(execution logs.) Tj
+1 0 0 1 50 62 Tm
+() Tj
+ET
+endstream
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000241 00000 n 
+0000004004 00000 n 
+trailer
+<< /Size 6 /Root 1 0 R >>
+startxref
+4074
+%%EOF
