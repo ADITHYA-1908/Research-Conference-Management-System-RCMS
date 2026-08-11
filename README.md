@@ -188,7 +188,7 @@ Research-Conference-Management-System/
 
 > ⚡ **Note**: The Render free tier may spin down after inactivity. The first request after idle may take 30–60 seconds to cold-start.
 
----
+----
 
 ## 👥 Team Contributions
 
