@@ -27,7 +27,7 @@ RCMS streamlines academic conference operations across four core user personas:
 
 ---
 
-## 🛠️ Technology Stack
+## 🛠️ Tech Stack
 
 | Component | Technologies & Versions |
 |:---|:---|
